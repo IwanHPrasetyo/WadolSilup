@@ -1,7 +1,12 @@
-import React, {Component} from 'react';
+import {createStackNavigator} from 'react-navigation-stack';
+import StartScreen from '../page/startup/startup';
+import {createAppContainer} from 'react-navigation';
 
-export default class navigation extends Component {
-  render() {
-    return <div></div>;
-  }
-}
+const MainNavigation = createStackNavigator(
+  {
+    StartScreen,
+  },
+  {headerMode: 'none', initialRouteKey: 'StartScreen'},
+);
+
+export default createAppContainer(MainNavigation);
