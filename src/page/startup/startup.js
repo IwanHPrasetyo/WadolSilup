@@ -16,6 +16,7 @@ import Styles from '../../style/style';
 
 export default startup = ({navigation}) => {
   const [onLogin, setOnlogin] = useState(false);
+  const [onButton, setOnButton] = useState('10%');
 
   return (
     <Container>
@@ -47,9 +48,12 @@ export default startup = ({navigation}) => {
         </Text>
       </View>
       <Content>
-        <View style={{marginTop: '8%', paddingHorizontal: '10%'}}>
+        <View style={{marginTop: '8%', paddingHorizontal: onButton}}>
           <Button
-            onPress={() => setOnlogin(!onLogin)}
+            onPress={() => {
+              onButton == '10%' ? setOnButton('40%') : setOnButton('10%');
+              setOnlogin(!onLogin);
+            }}
             rounded
             style={{
               backgroundColor: '#273c75',
