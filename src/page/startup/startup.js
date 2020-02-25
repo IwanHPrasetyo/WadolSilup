@@ -59,7 +59,7 @@ export default startup = ({navigation}) => {
             {onLogin == true ? (
               <Spinner color="#fff" />
             ) : (
-              <Text style={{fontWeight: 'bold'}}>Wadol Silup</Text>
+              <Text style={{fontWeight: 'bold'}}>Let's Report</Text>
             )}
           </Button>
         </View>
