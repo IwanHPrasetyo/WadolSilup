@@ -53,6 +53,9 @@ export default startup = ({navigation}) => {
             onPress={() => {
               onButton == '10%' ? setOnButton('40%') : setOnButton('10%');
               setOnlogin(!onLogin);
+              setTimeout(() => {
+                navigation.navigate('LoginScreen');
+              }, 1000);
             }}
             rounded
             style={{

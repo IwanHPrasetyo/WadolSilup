@@ -1,12 +1,12 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import StartScreen from '../page/startup/startup';
 import {createAppContainer} from 'react-navigation';
+import StartScreen from '../page/startup/startup';
+import LoginScreen from '../page/login/login';
 
 const MainNavigation = createStackNavigator(
-  {
-    StartScreen,
-  },
+  {StartScreen, LoginScreen},
   {headerMode: 'none', initialRouteKey: 'StartScreen'},
+  {headerMode: 'none', initialRouteKey: 'LoginScreen'},
 );
 
 export default createAppContainer(MainNavigation);
