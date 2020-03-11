@@ -47,8 +47,8 @@ export default startup = ({navigation}) => {
           Tindak Kriminal Polres Kota Malang
         </Text>
       </View>
-      <Content>
-        <View style={{marginTop: '8%', paddingHorizontal: onButton}}>
+      <Content style={{zIndex: 1}}>
+        <View style={{marginTop: '6%', paddingHorizontal: onButton}}>
           <Button
             onPress={() => {
               onButton == '10%' ? setOnButton('40%') : setOnButton('10%');
@@ -59,8 +59,9 @@ export default startup = ({navigation}) => {
             }}
             rounded
             style={{
-              backgroundColor: '#273c75',
+              backgroundColor: '#f7b731',
               justifyContent: 'center',
+              marginBottom: 10,
               elevation: 4,
             }}>
             {onLogin == true ? (
@@ -73,7 +74,7 @@ export default startup = ({navigation}) => {
       </Content>
       <Image
         source={require('../../asset/image/startimage.png')}
-        style={{width: '100%', height: '60%'}}
+        style={{width: '100%', height: '60%', zIndex: 2}}
       />
     </Container>
   );
