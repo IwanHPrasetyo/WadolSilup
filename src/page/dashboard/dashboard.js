@@ -7,15 +7,17 @@ import {
   Text,
   Card,
   CardItem,
-  Image,
   Left,
   Body,
+  Button,
   Grid,
   Row,
   Col,
   Icon,
+  Footer,
+  FooterTab,
 } from 'native-base';
-import {Dimensions, ImageBackground} from 'react-native';
+import {Dimensions, Image} from 'react-native';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -34,7 +36,7 @@ export default (dashboard = ({navigation}) => {
         <View
           style={{
             paddingHorizontal: SCREEN_WIDTH * 0.05,
-            marginTop: SCREEN_HEIGHT * 0.08,
+            marginTop: SCREEN_HEIGHT * 0.06,
           }}>
           <Card style={{borderRadius: 10}}>
             <CardItem
@@ -69,12 +71,13 @@ export default (dashboard = ({navigation}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="google-plus-square"
-                    type="FontAwesome"
-                    style={{color: '#e74c3c', fontSize: SCREEN_HEIGHT * 0.08}}
+                  <Image
+                    source={require('../../asset/image/station.png')}
+                    style={{width: '50%', height: '60%'}}
                   />
-                  <Text>Kantor Polisi</Text>
+                  <Text style={{fontWeight: 'bold', color: '#273c75'}}>
+                    Kantor Polisi
+                  </Text>
                 </View>
               </Col>
               <Col
@@ -93,12 +96,13 @@ export default (dashboard = ({navigation}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="google-plus-square"
-                    type="FontAwesome"
-                    style={{color: '#e74c3c', fontSize: SCREEN_HEIGHT * 0.08}}
+                  <Image
+                    source={require('../../asset/image/report.png')}
+                    style={{width: '40%', height: '60%'}}
                   />
-                  <Text>Kantor Polisi</Text>
+                  <Text style={{fontWeight: 'bold', color: '#273c75'}}>
+                    Buat Laporan
+                  </Text>
                 </View>
               </Col>
             </Row>
@@ -119,12 +123,13 @@ export default (dashboard = ({navigation}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="google-plus-square"
-                    type="FontAwesome"
-                    style={{color: '#e74c3c', fontSize: SCREEN_HEIGHT * 0.08}}
+                  <Image
+                    source={require('../../asset/image/speak.png')}
+                    style={{width: '50%', height: '60%'}}
                   />
-                  <Text>Kantor Polisi</Text>
+                  <Text style={{fontWeight: 'bold', color: '#273c75'}}>
+                    Chat
+                  </Text>
                 </View>
               </Col>
               <Col
@@ -143,18 +148,35 @@ export default (dashboard = ({navigation}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="google-plus-square"
-                    type="FontAwesome"
-                    style={{color: '#e74c3c', fontSize: SCREEN_HEIGHT * 0.08}}
+                  <Image
+                    source={require('../../asset/image/map.png')}
+                    style={{width: '44%', height: '60%', zIndex: 2}}
                   />
-                  <Text>Kantor Polisi</Text>
+                  <Text style={{fontWeight: 'bold', color: '#273c75'}}>
+                    Lokasi anda
+                  </Text>
                 </View>
               </Col>
             </Row>
           </Grid>
         </View>
       </Content>
+      <Footer>
+        <FooterTab>
+          <Button>
+            <Icon name="apps" />
+          </Button>
+          <Button>
+            <Icon name="camera" />
+          </Button>
+          <Button active>
+            <Icon active name="navigate" />
+          </Button>
+          <Button>
+            <Icon name="person" />
+          </Button>
+        </FooterTab>
+      </Footer>
     </Container>
   );
 });

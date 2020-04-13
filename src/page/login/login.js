@@ -36,7 +36,10 @@ export default (login = ({navigation}) => {
             flex: 1,
             alignItems: 'center',
           }}>
-          <Icon name="megaphone" type="Entypo" style={{color: '#34495e'}} />
+          <Image
+            source={require('../../asset/image/startimage.png')}
+            style={{width: '50%', height: '60%'}}
+          />
         </Left>
         <Body style={{flex: 5}}>
           <Text
