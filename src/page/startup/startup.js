@@ -14,7 +14,7 @@ import {
 } from 'native-base';
 import Styles from '../../style/style';
 
-export default startup = ({navigation}) => {
+startup = ({navigation}) => {
   const [onLogin, setOnlogin] = useState(false);
   const [onButton, setOnButton] = useState('10%');
 
@@ -59,7 +59,7 @@ export default startup = ({navigation}) => {
             }}
             rounded
             style={{
-              backgroundColor: '#f7b731',
+              backgroundColor: '#273c75',
               justifyContent: 'center',
               marginBottom: 10,
               elevation: 4,
@@ -79,3 +79,4 @@ export default startup = ({navigation}) => {
     </Container>
   );
 };
+export default startup;

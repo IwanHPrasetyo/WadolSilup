@@ -24,7 +24,7 @@ import Styles from '../../style/style';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default (login = ({navigation}) => {
+login = ({navigation}) => {
   const [username, setUsername] = useState(false);
   const [password, setPassword] = useState(false);
 
@@ -37,7 +37,7 @@ export default (login = ({navigation}) => {
             alignItems: 'center',
           }}>
           <Image
-            source={require('../../asset/image/startimage.png')}
+            source={require('../../asset/image/policebutton.png')}
             style={{width: '50%', height: '60%'}}
           />
         </Left>
@@ -46,9 +46,9 @@ export default (login = ({navigation}) => {
             style={{
               fontSize: SCREEN_HEIGHT * 0.04,
               fontWeight: 'bold',
-              color: '#34495e',
+              color: '#273c75',
             }}>
-            Wadol Silup
+            .Hallo Police
           </Text>
         </Body>
       </Header>
@@ -60,7 +60,7 @@ export default (login = ({navigation}) => {
           }}>
           <Text
             style={{
-              color: '#34495e',
+              color: '#273c75',
               fontSize: SCREEN_HEIGHT * 0.1,
               fontWeight: 'bold',
             }}>
@@ -68,7 +68,7 @@ export default (login = ({navigation}) => {
           </Text>
           <Text
             style={{
-              color: '#34495e',
+              color: '#273c75',
               fontSize: SCREEN_HEIGHT * 0.026,
               fontWeight: 'bold',
             }}>
@@ -118,7 +118,7 @@ export default (login = ({navigation}) => {
           </Form>
           <Text
             style={{
-              color: '#34495e',
+              color: '#273c75',
               fontWeight: 'bold',
               alignSelf: 'flex-end',
               fontSize: SCREEN_HEIGHT * 0.026,
@@ -160,7 +160,7 @@ export default (login = ({navigation}) => {
           </Button>
           <Text
             style={{
-              color: '#34495e',
+              color: '#273c75',
               fontWeight: 'bold',
               alignSelf: 'center',
               fontSize: SCREEN_HEIGHT * 0.026,
@@ -201,4 +201,6 @@ export default (login = ({navigation}) => {
       </Content>
     </Container>
   );
-});
+};
+
+export default login;
