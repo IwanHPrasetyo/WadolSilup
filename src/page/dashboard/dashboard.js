@@ -242,8 +242,8 @@ dashboard = ({navigation}) => {
             backgroundColor: '#ffffff',
             elevation: 20,
           }}>
-          <Button>
-            <Icon name="apps" />
+          <Button onPress={() => navigation.navigate('MasterLaporanScreen')}>
+            <Icon name="book-open" type="MaterialCommunityIcons" />
           </Button>
           <Button>
             <Icon name="person" />
