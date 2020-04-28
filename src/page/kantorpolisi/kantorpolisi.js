@@ -75,7 +75,7 @@ kantorpolisi = ({navigation}) => {
           />
         </Left>
         <Body>
-          <Row>
+          {/* <Row>
             <Col
               style={{
                 flex: 1,
@@ -105,7 +105,7 @@ kantorpolisi = ({navigation}) => {
                 Polisi
               </Text>
             </Col>
-          </Row>
+          </Row> */}
         </Body>
       </Header>
       <Content>
