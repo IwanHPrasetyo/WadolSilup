@@ -72,7 +72,7 @@ masterlaporan = ({navigation}) => {
         <Left style={{flex: 1}}>
           <Icon
             onPress={() => navigation.goBack()}
-            name="arrow-circle-left"
+            name="th-large"
             type="FontAwesome"
             style={{
               color: '#ffffff',

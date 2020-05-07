@@ -1,5 +1,5 @@
 package com.wadolsilup;
-
+import com.airbnb.android.react.maps.MapsPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;

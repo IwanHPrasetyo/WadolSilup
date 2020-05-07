@@ -131,7 +131,7 @@ dashboard = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Button
-                  onPress={() => console.log('okkk')}
+                  onPress={() => navigation.navigate('MasterLaporanScreen')}
                   style={{
                     height: '100%',
                     backgroundColor: 'transparent',
@@ -236,20 +236,6 @@ dashboard = ({navigation}) => {
           </Grid>
         </View>
       </Content>
-      <Footer style={{backgroundColor: '#fff'}}>
-        <FooterTab
-          style={{
-            backgroundColor: '#ffffff',
-            elevation: 20,
-          }}>
-          <Button onPress={() => navigation.navigate('MasterLaporanScreen')}>
-            <Icon name="book-open" type="MaterialCommunityIcons" />
-          </Button>
-          <Button>
-            <Icon name="person" />
-          </Button>
-        </FooterTab>
-      </Footer>
     </Container>
   );
 };

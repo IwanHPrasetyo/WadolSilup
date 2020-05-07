@@ -18,7 +18,7 @@ import {
   Right,
   Left,
 } from 'native-base';
-import {Dimensions, Image} from 'react-native';
+import {Dimensions, Image, StatusBar} from 'react-native';
 import Styles from '../../style/style';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -53,6 +53,7 @@ login = ({navigation}) => {
         </Body>
       </Header>
       <Content>
+        <StatusBar backgroundColor="#4b7bec" barStyle="light-content" />
         <View
           style={{
             marginTop: SCREEN_HEIGHT * 0.03,
