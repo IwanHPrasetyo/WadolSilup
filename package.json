@@ -16,6 +16,7 @@
     "native-base": "^2.13.8",
     "react": "16.9.0",
     "react-native": "0.61.2",
+    "react-native-android-location-services-dialog-box": "^2.8.2",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-image-slider-box": "^1.0.12",
     "react-native-maps": "^0.27.1",

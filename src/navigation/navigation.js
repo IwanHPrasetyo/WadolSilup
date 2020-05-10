@@ -8,6 +8,10 @@ import DashboardScreen from '../page/dashboard/dashboard';
 import KantorPolisiScreen from '../page/kantorpolisi/kantorpolisi';
 import MasterLaporanScreen from '../page/masterlaporan/masterlaporan';
 import ProfileScreen from '../page/profile/profile';
+import MapScreen from '../page/maps/maps';
+import ChatScreen from '../page/chat/chat';
+import ReportScreen from '../page/report/report';
+
 import {Icon, View} from 'native-base';
 
 const TabNavigation = createMaterialBottomTabNavigator(
@@ -69,6 +73,15 @@ const MainNavigation = createStackNavigator(
     DashboardScreen: TabNavigation,
     KantorPolisiScreen: {
       screen: KantorPolisiScreen,
+    },
+    ReportScreen: {
+      screen: ReportScreen,
+    },
+    MapScreen: {
+      screen: MapScreen,
+    },
+    ChatScreen: {
+      screen: ChatScreen,
     },
   },
   {

@@ -18,7 +18,7 @@ import {
   Footer,
   FooterTab,
 } from 'native-base';
-import {Dimensions, Image, StatusBar} from 'react-native';
+import {Dimensions, Image, StatusBar, StyleSheet} from 'react-native';
 import {
   TouchableOpacity,
   TouchableHighlight,
@@ -131,7 +131,7 @@ dashboard = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Button
-                  onPress={() => navigation.navigate('MasterLaporanScreen')}
+                  onPress={() => navigation.navigate('ReportScreen')}
                   style={{
                     height: '100%',
                     backgroundColor: 'transparent',
@@ -175,6 +175,7 @@ dashboard = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Button
+                  onPress={() => navigation.navigate('ChatScreen')}
                   style={{
                     height: '100%',
                     backgroundColor: 'transparent',
@@ -207,6 +208,7 @@ dashboard = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Button
+                  onPress={() => navigation.navigate('MapScreen')}
                   style={{
                     height: '100%',
                     backgroundColor: 'transparent',

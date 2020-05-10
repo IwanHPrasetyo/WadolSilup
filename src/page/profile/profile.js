@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   Container,
@@ -15,11 +15,26 @@ import {
   Thumbnail,
 } from 'native-base';
 import {StatusBar, StyleSheet, Dimensions} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 profile = ({navigation}) => {
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(info => {
+      setLatitude(info.coords.latitude);
+      setLongitude(info.coords.longitude);
+    });
+  };
+
   return (
     <Container>
       <Header style={Styles.header}>
@@ -104,22 +119,32 @@ profile = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontWeight: 'bold', color: '#273c75'}}>M Fulan</Text>
           <Text style={{fontWeight: 'bold', color: '#273c75'}}>
             03183183108
           </Text>
+          <Text style={{fontWeight: 'bold', color: '#273c75'}}>M Fulan</Text>
         </View>
         <View style={Styles.container}>
           <MapView
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
             style={Styles.map}
             region={{
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: parseFloat(latitude),
+              longitude: parseFloat(longitude),
               latitudeDelta: 0.015,
               longitudeDelta: 0.0121,
-            }}
-          />
+            }}>
+            <Marker
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}
+              title={'Lokasi Anda'}
+              description={'You here'}
+            />
+          </MapView>
         </View>
       </Content>
     </Container>

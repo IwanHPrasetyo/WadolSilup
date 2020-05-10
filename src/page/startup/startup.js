@@ -13,10 +13,15 @@ import {
   Spinner,
 } from 'native-base';
 import Styles from '../../style/style';
+import {Location} from '../../helper/Premissions';
 
 startup = ({navigation}) => {
   const [onLogin, setOnlogin] = useState(false);
   const [onButton, setOnButton] = useState('10%');
+
+  useEffect(() => {
+    Location();
+  }, []);
 
   return (
     <Container>
