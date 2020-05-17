@@ -42,16 +42,6 @@ const TabNavigation = createMaterialBottomTabNavigator(
         ),
       },
     },
-    User: {
-      screen: ProfileScreen,
-      navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <View>
-            <Icon style={{color: tintColor}} name="user" type="FontAwesome" />
-          </View>
-        ),
-      },
-    },
   },
   {
     initialRouteName: 'DashboardScreen',
@@ -82,6 +72,9 @@ const MainNavigation = createStackNavigator(
     },
     ChatScreen: {
       screen: ChatScreen,
+    },
+    ProfileScreen: {
+      screen: ProfileScreen,
     },
   },
   {

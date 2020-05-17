@@ -17,6 +17,7 @@ import {
 import {StatusBar, StyleSheet, Dimensions} from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import {Location} from '../../helper/Premissions';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -25,6 +26,7 @@ profile = ({navigation}) => {
   const [longitude, setLongitude] = useState('');
 
   useEffect(() => {
+    Location();
     getLocation();
   }, []);
 
@@ -41,7 +43,7 @@ profile = ({navigation}) => {
         <Left style={{flex: 1}}>
           <Icon
             onPress={() => navigation.goBack()}
-            name="user-circle-o"
+            name="arrow-circle-left"
             type="FontAwesome"
             style={{
               color: '#ffffff',
@@ -98,8 +100,14 @@ profile = ({navigation}) => {
                   paddingBottom: 50,
                 }}>
                 <Thumbnail
-                  large
-                  style={{borderColor: '#ffffff', borderWidth: 4, elevation: 4}}
+                  style={{
+                    borderColor: '#ffffff',
+                    borderWidth: 4,
+                    elevation: 4,
+                    borderRadius: 200,
+                    height: SCREEN_HEIGHT * 0.3,
+                    width: SCREEN_HEIGHT * 0.3,
+                  }}
                   source={require('../../asset/image/login.png')}
                 />
               </Col>
@@ -119,32 +127,121 @@ profile = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontWeight: 'bold', color: '#273c75'}}>
-            03183183108
-          </Text>
-          <Text style={{fontWeight: 'bold', color: '#273c75'}}>M Fulan</Text>
-        </View>
-        <View style={Styles.container}>
-          <MapView
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            style={Styles.map}
-            region={{
-              latitude: parseFloat(latitude),
-              longitude: parseFloat(longitude),
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121,
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: '#273c75',
+              fontSize: SCREEN_HEIGHT * 0.035,
             }}>
-            <Marker
-              coordinate={{
-                latitude: latitude,
-                longitude: longitude,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.0121,
-              }}
-              title={'Lokasi Anda'}
-              description={'You here'}
-            />
-          </MapView>
+            031831831081781
+          </Text>
+          <Text
+            style={{
+              fontSize: SCREEN_HEIGHT * 0.03,
+              fontWeight: 'bold',
+              color: '#273c75',
+            }}>
+            M Fulan
+          </Text>
+        </View>
+        <View>
+          <Row style={{marginTop: '3%'}}>
+            <Col
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  backgroundColor: '#327BF6',
+                  padding: '8%',
+                  borderRadius: 200,
+                  borderWidth: 4,
+                  elevation: 4,
+                  borderColor: '#ffffff',
+                }}>
+                <Icon
+                  style={{color: '#ffffff', fontSize: SCREEN_HEIGHT * 0.1}}
+                  name="book"
+                  type="Entypo"
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: '#f9ca24',
+                    paddingHorizontal: '10%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 20,
+                    top: '6%',
+                    left: '45%',
+                    paddingVertical: '4%',
+                  }}>
+                  <Text style={{fontWeight: 'bold', color: '#ffffff'}}>3</Text>
+                </View>
+              </View>
+              <Text
+                style={{
+                  fontSize: SCREEN_HEIGHT * 0.032,
+                  marginTop: '5%',
+                  fontWeight: 'bold',
+                  color: '#273c75',
+                }}>
+                Laporan Selesai
+              </Text>
+            </Col>
+            <Col
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  backgroundColor: '#327BF6',
+                  padding: '8%',
+                  borderRadius: 200,
+                  borderWidth: 4,
+                  elevation: 4,
+                  borderColor: '#ffffff',
+                }}>
+                <Icon
+                  style={{color: '#ffffff', fontSize: SCREEN_HEIGHT * 0.1}}
+                  name="open-book"
+                  type="Entypo"
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: '#f9ca24',
+                    paddingHorizontal: '10%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 20,
+                    top: '6%',
+                    left: '45%',
+                    paddingVertical: '4%',
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#ffffff',
+                    }}>
+                    3
+                  </Text>
+                </View>
+              </View>
+              <Text
+                numberOfLines={1}
+                style={{
+                  marginTop: '5%',
+                  fontSize: SCREEN_HEIGHT * 0.032,
+                  fontWeight: 'bold',
+                  color: '#273c75',
+                }}>
+                Laporan dalam Proses
+              </Text>
+            </Col>
+          </Row>
         </View>
       </Content>
     </Container>
@@ -154,19 +251,6 @@ profile = ({navigation}) => {
 const Styles = StyleSheet.create({
   header: {
     backgroundColor: '#327BF6',
-  },
-  profileHeader: {
-    flex: 1,
-    backgroundColor: '#327BF6',
-  },
-  container: {
-    marginTop: -40,
-    height: SCREEN_HEIGHT * 0.53,
-    width: SCREEN_WIDTH * 1,
-    alignItems: 'center',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
   },
 });
 

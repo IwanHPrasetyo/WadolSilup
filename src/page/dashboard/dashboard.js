@@ -208,7 +208,7 @@ dashboard = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Button
-                  onPress={() => navigation.navigate('MapScreen')}
+                  onPress={() => navigation.navigate('ProfileScreen')}
                   style={{
                     height: '100%',
                     backgroundColor: 'transparent',
@@ -225,11 +225,11 @@ dashboard = ({navigation}) => {
                       alignItems: 'center',
                     }}>
                     <Image
-                      source={require('../../asset/image/map.png')}
-                      style={{width: '44%', height: '60%'}}
+                      source={require('../../asset/image/userok.png')}
+                      style={{width: '44%', height: '58%'}}
                     />
                     <Text style={{fontWeight: 'bold', color: '#273c75'}}>
-                      Lokasi anda
+                      Profil
                     </Text>
                   </View>
                 </Button>
