@@ -226,7 +226,7 @@ dashboard = ({navigation}) => {
                     }}>
                     <Image
                       source={require('../../asset/image/userok.png')}
-                      style={{width: '44%', height: '58%'}}
+                      style={{width: '44%', height: '54%'}}
                     />
                     <Text style={{fontWeight: 'bold', color: '#273c75'}}>
                       Profil

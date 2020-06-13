@@ -15,9 +15,6 @@ import {
   Thumbnail,
 } from 'native-base';
 import {StatusBar, StyleSheet, Dimensions} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
-import {Location} from '../../helper/Premissions';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -25,22 +22,12 @@ profile = ({navigation}) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
-  useEffect(() => {
-    Location();
-    getLocation();
-  }, []);
-
-  const getLocation = () => {
-    Geolocation.getCurrentPosition(info => {
-      setLatitude(info.coords.latitude);
-      setLongitude(info.coords.longitude);
-    });
-  };
+  useEffect(() => {}, []);
 
   return (
     <Container>
       <Header style={Styles.header}>
-        <Left style={{flex: 1}}>
+        <Left>
           <Icon
             onPress={() => navigation.goBack()}
             name="arrow-circle-left"
@@ -52,33 +39,32 @@ profile = ({navigation}) => {
             }}
           />
         </Left>
-        <Body style={{flex: 3}}>
+        <Body>
           <Row>
             <Col
               style={{
-                flex: 1,
+                width: SCREEN_WIDTH * 0.22,
                 justifyContent: 'center',
+                alignItems: 'flex-end',
               }}>
               <Text
                 style={{
                   fontWeight: 'bold',
                   color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
-                  alignSelf: 'flex-end',
+                  fontSize: SCREEN_WIDTH * 0.08,
                 }}>
                 .Profil
               </Text>
             </Col>
             <Col
               style={{
-                flex: 2,
                 paddingLeft: 10,
                 justifyContent: 'center',
               }}>
               <Text
                 style={{
                   color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
+                  fontSize: SCREEN_WIDTH * 0.08,
                   alignSelf: 'flex-start',
                 }}>
                 Anda
@@ -182,7 +168,7 @@ profile = ({navigation}) => {
               </View>
               <Text
                 style={{
-                  fontSize: SCREEN_HEIGHT * 0.032,
+                  fontSize: SCREEN_WIDTH * 0.05,
                   marginTop: '5%',
                   fontWeight: 'bold',
                   color: '#273c75',
@@ -234,11 +220,11 @@ profile = ({navigation}) => {
                 numberOfLines={1}
                 style={{
                   marginTop: '5%',
-                  fontSize: SCREEN_HEIGHT * 0.032,
+                  fontSize: SCREEN_WIDTH * 0.05,
                   fontWeight: 'bold',
                   color: '#273c75',
                 }}>
-                Laporan dalam Proses
+                Laporan Proses
               </Text>
             </Col>
           </Row>

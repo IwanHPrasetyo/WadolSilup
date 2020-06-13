@@ -11,6 +11,7 @@ import ProfileScreen from '../page/profile/profile';
 import MapScreen from '../page/maps/maps';
 import ChatScreen from '../page/chat/chat';
 import ReportScreen from '../page/report/report';
+import RegisterScreen from '../page/register/register';
 
 import {Icon, View} from 'native-base';
 
@@ -75,6 +76,9 @@ const MainNavigation = createStackNavigator(
     },
     ProfileScreen: {
       screen: ProfileScreen,
+    },
+    RegisterScreen: {
+      screen: RegisterScreen,
     },
   },
   {

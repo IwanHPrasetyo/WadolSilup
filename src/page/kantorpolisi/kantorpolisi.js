@@ -75,37 +75,6 @@ kantorpolisi = ({navigation}) => {
           />
         </Left>
         <Body>
-          {/* <Row>
-            <Col
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
-                  alignSelf: 'flex-start',
-                }}>
-                .Kantor
-              </Text>
-            </Col>
-            <Col
-              style={{
-                flex: 1.8,
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
-                  alignSelf: 'flex-start',
-                }}>
-                Polisi
-              </Text>
-            </Col>
-          </Row> */}
         </Body>
       </Header>
       <Content>

@@ -8,6 +8,7 @@ import MainNavigation from './src/navigation/navigation';
 import Profil from './src/page/profile/profile';
 import Report from './src/page/report/report';
 import Chat from './src/page/chat/chat';
+import Register from './src/page/register/register';
 
 class App extends Component {
   render() {

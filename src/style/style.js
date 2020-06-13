@@ -9,14 +9,20 @@ const Styles = StyleSheet.create({
     backgroundColor: '#fff',
     elevation: 0,
   },
+  colHeader: {
+    width: SCREEN_WIDTH * 0.15,
+  },
+  colHeader2: {
+    backgroundColor: 'red',
+  },
   textHeader: {
     color: '#273c75',
     fontWeight: 'bold',
-    fontSize: SCREEN_HEIGHT * 0.06,
+    fontSize: SCREEN_WIDTH * 0.06,
   },
   textHeaderLeft: {
     color: '#273c75',
-    fontSize: SCREEN_HEIGHT * 0.06,
+    fontSize: SCREEN_WIDTH * 0.06,
   },
   rowHeader: {
     justifyContent: 'center',

@@ -143,6 +143,7 @@ login = ({navigation}) => {
             <Text style={{fontWeight: 'bold'}}>Login</Text>
           </Button>
           <Button
+            onPress={() => navigation.navigate('RegisterScreen')}
             style={{
               borderRadius: 10,
               width: '80%',

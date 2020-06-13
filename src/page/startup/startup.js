@@ -28,10 +28,10 @@ startup = ({navigation}) => {
       <Header style={Styles.header}>
         <Body style={{justifyContent: 'center'}}>
           <Row style={Styles.rowHeader}>
-            <Col style={{flex: 1}}>
+            <Col style={Styles.colHeader}>
               <Text style={Styles.textHeader}>.Hallo</Text>
             </Col>
-            <Col style={{flex: 3}}>
+            <Col>
               <Text style={Styles.textHeaderLeft}>Police</Text>
             </Col>
           </Row>

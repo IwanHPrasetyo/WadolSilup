@@ -71,7 +71,6 @@ masterlaporan = ({navigation}) => {
         <StatusBar backgroundColor="#327BF6" barStyle="light-content" />
         <Left style={{flex: 1}}>
           <Icon
-            onPress={() => navigation.goBack()}
             name="th-large"
             type="FontAwesome"
             style={{
@@ -85,14 +84,14 @@ masterlaporan = ({navigation}) => {
           <Row>
             <Col
               style={{
-                flex: 1,
+                width: SCREEN_WIDTH * 0.3,
                 justifyContent: 'center',
               }}>
               <Text
                 style={{
                   fontWeight: 'bold',
                   color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
+                  fontSize: SCREEN_WIDTH * 0.08,
                   alignSelf: 'flex-start',
                 }}>
                 .Riwayat
@@ -100,13 +99,12 @@ masterlaporan = ({navigation}) => {
             </Col>
             <Col
               style={{
-                flex: 1.4,
                 justifyContent: 'center',
               }}>
               <Text
                 style={{
                   color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
+                  fontSize: SCREEN_WIDTH * 0.08,
                   alignSelf: 'flex-start',
                 }}>
                 Laporan
