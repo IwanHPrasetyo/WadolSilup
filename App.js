@@ -9,6 +9,7 @@ import Profil from './src/page/profile/profile';
 import Report from './src/page/report/report';
 import Chat from './src/page/chat/chat';
 import Register from './src/page/register/register';
+import Maps from './src/page/maps/maps';
 
 class App extends Component {
   render() {

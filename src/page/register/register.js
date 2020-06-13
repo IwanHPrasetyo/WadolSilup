@@ -28,6 +28,12 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 register = ({navigation}) => {
+  const [radio, setRadio] = useState(false);
+
+  const radioG = data => {
+    setRadio(data);
+  };
+
   return (
     <Container style={Styles.container}>
       <Content>
@@ -46,9 +52,10 @@ register = ({navigation}) => {
                   </Left>
                   <Right>
                     <Radio
+                      onPress={() => radioG(false)}
                       color={'#f0ad4e'}
                       selectedColor={'#5cb85c'}
-                      selected={true}
+                      selected={!radio}
                     />
                   </Right>
                 </Col>
@@ -58,9 +65,10 @@ register = ({navigation}) => {
                   </Left>
                   <Right>
                     <Radio
+                      onPress={() => radioG(true)}
                       color={'#f0ad4e'}
                       selectedColor={'#5cb85c'}
-                      selected={false}
+                      selected={radio}
                     />
                   </Right>
                 </Col>
@@ -78,7 +86,7 @@ register = ({navigation}) => {
             <Row>
               <Col>
                 <Button
-                  onPress={() => navigation.goBack()}
+                  onPress={() => navigation.goBack(null)}
                   style={Styles.btnCancel}>
                   <Icon name="close" type="FontAwesome" />
                 </Button>
@@ -95,13 +103,15 @@ register = ({navigation}) => {
               <Text style={Styles.textAkun}>Sudah punya akun ?</Text>
             </Col>
             <Col style={{flex: 1, alignItems: 'flex-start'}}>
-              <Text
-                style={[
-                  Styles.textAkun,
-                  {fontWeight: 'bold', marginLeft: SCREEN_WIDTH * 0.02},
-                ]}>
-                Login
-              </Text>
+              <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                <Text
+                  style={[
+                    Styles.textAkun,
+                    {fontWeight: 'bold', marginLeft: SCREEN_WIDTH * 0.02},
+                  ]}>
+                  Login
+                </Text>
+              </TouchableOpacity>
             </Col>
           </Row>
         </View>

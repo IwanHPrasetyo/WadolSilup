@@ -74,8 +74,7 @@ kantorpolisi = ({navigation}) => {
             }}
           />
         </Left>
-        <Body>
-        </Body>
+        <Body />
       </Header>
       <Content>
         <SafeAreaView style={Styles.container}>
@@ -159,7 +158,9 @@ kantorpolisi = ({navigation}) => {
                       </Row>
                     </Col>
                     <Col>
-                      <Button style={Styles.button}>
+                      <Button
+                        onPress={() => navigation.navigate('MapScreen')}
+                        style={Styles.button}>
                         <Icon
                           name="google-maps"
                           type="MaterialCommunityIcons"

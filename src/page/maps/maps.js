@@ -10,7 +10,7 @@ maps = ({navigation}) => {
   const [longitude, setLongitude] = useState('');
 
   useEffect(() => {
-    Location();
+    // Location();
     getLocation();
   }, []);
 
