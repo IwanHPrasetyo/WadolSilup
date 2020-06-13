@@ -10,6 +10,7 @@ import Report from './src/page/report/report';
 import Chat from './src/page/chat/chat';
 import Register from './src/page/register/register';
 import Maps from './src/page/maps/maps';
+import ChatRoom from './src/page/chatRoom/chatRoom';
 
 class App extends Component {
   render() {

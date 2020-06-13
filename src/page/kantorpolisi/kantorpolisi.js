@@ -24,36 +24,50 @@ const dataKantorPolisi = [
     nama_kantor: 'Polwil Malang',
     alamat: 'Jl. Singosari Malang',
     telp: '(0341) 453466',
+    latitude: -7.9690962,
+    longitude: 112.6266054,
   },
   {
     nama_kantor: 'Polresta Malang',
     alamat: 'Jl. Slamet Riyadi Malang',
     telp: '(0341) 366444',
+    latitude: -7.9716824,
+    longitude: 112.6305915,
   },
   {
     nama_kantor: 'Polsekta Blimbing',
     alamat: 'Jl. Raden Intan No.6 Malang',
     telp: '(0341) 491304',
+    latitude: -7.9299114,
+    longitude: 112.6483513,
   },
   {
     nama_kantor: 'Polsekta Kedungkandang',
     alamat: 'Jl. Ki Ageng Gribig 96 Malang',
     telp: '(0341) 325057',
+    latitude: -7.9934269,
+    longitude: 112.6460037,
   },
   {
     nama_kantor: 'Polsekta Klojen',
     alamat: 'Jl. Kelut 11 Malang',
     telp: '(0341) 361667',
+    latitude: -7.9808747,
+    longitude: 112.6233234,
   },
   {
     nama_kantor: 'Polsekta Lowokwaru',
     alamat: 'Jl. Lowokwaru-Malang',
     telp: '(0341) 472392',
+    latitude: -7.9413999,
+    longitude: 112.6071599,
   },
   {
     nama_kantor: 'Polsekta Sukun',
     alamat: 'Jl. Kol Sugiono No.5 Malang',
     telp: '(0341) 368638',
+    latitude: -8.0042733,
+    longitude: 112.6163261,
   },
 ];
 
@@ -159,7 +173,14 @@ kantorpolisi = ({navigation}) => {
                     </Col>
                     <Col>
                       <Button
-                        onPress={() => navigation.navigate('MapScreen')}
+                        onPress={() =>
+                          navigation.navigate('MapScreen', {
+                            nama_kantor: item.nama_kantor,
+                            alamat: item.alamat,
+                            latitude: item.latitude,
+                            longitude: item.longitude,
+                          })
+                        }
                         style={Styles.button}>
                         <Icon
                           name="google-maps"

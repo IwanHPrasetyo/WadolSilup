@@ -20,7 +20,6 @@
     "react-native-gesture-handler": "^1.6.0",
     "react-native-image-slider-box": "^1.0.12",
     "react-native-maps": "^0.27.1",
-    "react-native-maps-directions": "^1.8.0",
     "react-native-paper": "^3.9.0",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
