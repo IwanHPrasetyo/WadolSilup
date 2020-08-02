@@ -13,15 +13,28 @@ import {
   Spinner,
 } from 'native-base';
 import Styles from '../../style/style';
-// import {Location} from '../../helper/Premissions';
+import database from '@react-native-firebase/database';
+import {getDataLogin} from '../../helper/Asyncstorage';
+import {Location} from '../../helper/Premissions';
 
 startup = ({navigation}) => {
   const [onLogin, setOnlogin] = useState(false);
   const [onButton, setOnButton] = useState('10%');
+  const [dataUser, setDataUser] = useState([]);
 
   useEffect(() => {
-    // Location();
+    Location();
+    dataLogin();
+    return () => {
+      setOnlogin(false);
+    };
   }, []);
+
+  const dataLogin = async () => {
+    (await getDataLogin()).length > 0
+      ? navigation.navigate('DashboardScreen')
+      : null;
+  };
 
   return (
     <Container>
@@ -64,6 +77,7 @@ startup = ({navigation}) => {
             }}
             rounded
             style={{
+              alignSelf: 'center',
               backgroundColor: '#273c75',
               justifyContent: 'center',
               marginBottom: 10,

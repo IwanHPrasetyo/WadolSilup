@@ -95,7 +95,6 @@ dashboard = ({navigation}) => {
                 style={{
                   flex: 1,
                   justifyContent: 'center',
-                  alignItems: 'center',
                 }}>
                 <Button
                   onPress={() => navigation.navigate('KantorPolisiScreen')}
@@ -103,6 +102,8 @@ dashboard = ({navigation}) => {
                     height: '100%',
                     backgroundColor: 'transparent',
                     elevation: 0,
+                    width: '100%',
+                    justifyContent: 'center',
                   }}>
                   <View
                     style={{
@@ -136,6 +137,8 @@ dashboard = ({navigation}) => {
                     height: '100%',
                     backgroundColor: 'transparent',
                     elevation: 0,
+                    width: '100%',
+                    justifyContent: 'center',
                   }}>
                   <View
                     style={{
@@ -180,6 +183,8 @@ dashboard = ({navigation}) => {
                     height: '100%',
                     backgroundColor: 'transparent',
                     elevation: 0,
+                    width: '100%',
+                    justifyContent: 'center',
                   }}>
                   <View
                     style={{
@@ -213,6 +218,8 @@ dashboard = ({navigation}) => {
                     height: '100%',
                     backgroundColor: 'transparent',
                     elevation: 0,
+                    width: '100%',
+                    justifyContent: 'center',
                   }}>
                   <View
                     style={{

@@ -17,9 +17,12 @@ import {
   Body,
   Right,
   Left,
+  Toast,
 } from 'native-base';
-import {Dimensions, Image, StatusBar} from 'react-native';
+import {Dimensions, Image, StatusBar, ToastAndroid} from 'react-native';
 import Styles from '../../style/style';
+import database from '@react-native-firebase/database';
+import {loginData, getDataLogin} from '../../helper/Asyncstorage';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -27,6 +30,50 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 login = ({navigation}) => {
   const [username, setUsername] = useState(false);
   const [password, setPassword] = useState(false);
+  let [showPass, setShowPass] = useState(true);
+  const [id, setId] = useState();
+  const [pass, setPass] = useState();
+
+  useEffect(() => {
+    dataLogin();
+  }, []);
+
+  const dataLogin = async () => {
+    (await getDataLogin()).length > 0
+      ? navigation.navigate('DashboardScreen')
+      : null;
+  };
+
+  const Login = async () => {
+    const data = [];
+    await database()
+      .ref(`/DataPolapor/${id}`)
+      .once('value')
+      .then(snapshot => {
+        data.push(snapshot.val());
+      });
+    let uid = data[0] != null;
+    let passauth = uid ? data[0].password == pass : null;
+
+    uid
+      ? passauth
+        ? (Toast.show({
+            text: 'Login Berhasil',
+            type: 'success',
+            duration: 800,
+          }),
+          (await loginData(data))
+            ? navigation.navigate('DashboardScreen')
+            : null)
+        : Toast.show({
+            text: 'Password yang anda masukan salah!',
+            type: 'warning',
+          })
+      : Toast.show({
+          text: 'Id tidak terdaftar',
+          type: 'warning',
+        });
+  };
 
   return (
     <Container>
@@ -84,10 +131,13 @@ login = ({navigation}) => {
                 type="FontAwesome"
                 style={{color: username == true ? '#4b7bec' : '#afafaf'}}
               />
-              <Label style={{color: '#afafaf'}}>Username</Label>
               <Input
+                placeholder="No Telfon"
                 onFocus={() => {
                   setUsername(true), setPassword(false);
+                }}
+                onChangeText={data => {
+                  setId(data);
                 }}
               />
               <Icon
@@ -104,16 +154,23 @@ login = ({navigation}) => {
                 type="FontAwesome"
                 style={{color: password == true ? '#4b7bec' : '#afafaf'}}
               />
-              <Label style={{color: '#afafaf'}}>Password</Label>
               <Input
+                placeholder="Password"
+                secureTextEntry={showPass}
                 onFocus={() => {
                   setUsername(false), setPassword(true);
                 }}
+                onChangeText={data => {
+                  setPass(data);
+                }}
               />
               <Icon
-                name="md-eye"
-                type="Ionicons"
+                name={showPass ? 'eye-off' : 'eye'}
+                type="Feather"
                 style={{color: password == true ? '#fbc531' : '#afafaf'}}
+                onPress={() => {
+                  setShowPass(!showPass);
+                }}
               />
             </Item>
           </Form>
@@ -139,7 +196,9 @@ login = ({navigation}) => {
               justifyContent: 'center',
               alignSelf: 'center',
             }}
-            onPress={() => navigation.navigate('DashboardScreen')}>
+            onPress={() => {
+              Login();
+            }}>
             <Text style={{fontWeight: 'bold'}}>Login</Text>
           </Button>
           <Button

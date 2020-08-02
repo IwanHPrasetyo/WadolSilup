@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "191693298973",
+    "firebase_url": "https://hallopolice-346a6.firebaseio.com",
+    "project_id": "hallopolice-346a6",
+    "storage_bucket": "hallopolice-346a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191693298973:android:aeaf6b267e9e9f93f2d5f4",
+        "android_client_info": {
+          "package_name": "com.wadolsilup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191693298973-sgo5et329kg7tai75jb37lu7mkb793ll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Y1E7KXi1SbWe8vnTiDglRVLr4G3-srI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191693298973-sgo5et329kg7tai75jb37lu7mkb793ll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

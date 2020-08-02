@@ -18,20 +18,53 @@ import {
   Right,
   Textarea,
   Button,
+  Toast,
 } from 'native-base';
 import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native-gesture-handler';
-
+import database from '@react-native-firebase/database';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 register = ({navigation}) => {
-  const [radio, setRadio] = useState(false);
+  const [radio, setRadio] = useState(true);
+  const [noId, setNoid] = useState('');
+  const [nama, setNama] = useState('');
+  const [jenisKelamin, setJenisKelamin] = useState('');
+  const [email, setEmail] = useState('');
+  const [telfon, setTelfon] = useState('');
+  const [alamat, setAlamat] = useState('');
+  const [password, setPassword] = useState('');
 
   const radioG = data => {
+    setJenisKelamin(data ? 'L' : 'P');
     setRadio(data);
+  };
+  const registerUser = () => {
+    database()
+      .ref(`/DataPolapor/${telfon}`)
+      .set({
+        noIdentitas: noId,
+        nama: nama,
+        jenisKelamin: jenisKelamin,
+        email: email,
+        telfon: telfon,
+        alamat: alamat,
+        password: password,
+      })
+      .then(() => {
+        console.log('Data set.');
+        Toast.show({
+          text: 'Daftar Berhasil',
+          type: 'success',
+          duration: 800,
+        });
+        setTimeout(() => {
+          navigation.goBack(null);
+        }, 1000);
+      });
   };
 
   return (
@@ -42,46 +75,81 @@ register = ({navigation}) => {
           <Icon name="addusergroup" type="AntDesign" style={Styles.iconLogo} />
           <View style={Styles.cardForm}>
             <Text style={Styles.tvHallo}>Hallo Police</Text>
-            <Input placeholder="No KTP" style={Styles.inputForm} />
-            <Input placeholder="Nama Lengkap" style={Styles.inputForm} />
+            <Input
+              onChangeText={data => {
+                setNoid(data);
+              }}
+              placeholder="No KTP"
+              style={Styles.inputForm}
+            />
+            <Input
+              onChangeText={data => setNama(data)}
+              placeholder="Nama Lengkap"
+              style={Styles.inputForm}
+            />
             <View style={Styles.radio}>
               <Row>
                 <Col>
                   <Left>
                     <Text style={Styles.tvRadio}>Laki - laki</Text>
                   </Left>
-                  <Right>
-                    <Radio
-                      onPress={() => radioG(false)}
-                      color={'#f0ad4e'}
-                      selectedColor={'#5cb85c'}
-                      selected={!radio}
+                  <TouchableOpacity onPress={() => radioG(!radio)}>
+                    <View
+                      style={{
+                        height: 20,
+                        width: 20,
+                        alignSelf: 'center',
+                        borderRadius: 20,
+                        backgroundColor: radio ? '#f0ad4e' : '#fff',
+                        borderColor: '#f0ad4e',
+                        borderWidth: 2,
+                      }}
                     />
-                  </Right>
+                  </TouchableOpacity>
                 </Col>
                 <Col>
                   <Left>
                     <Text style={Styles.tvRadio}>Perempuan</Text>
                   </Left>
-                  <Right>
-                    <Radio
-                      onPress={() => radioG(true)}
-                      color={'#f0ad4e'}
-                      selectedColor={'#5cb85c'}
-                      selected={radio}
+                  <TouchableOpacity onPress={() => radioG(!radio)}>
+                    <View
+                      style={{
+                        height: 20,
+                        width: 20,
+                        alignSelf: 'center',
+                        borderRadius: 20,
+                        backgroundColor: !radio ? '#f0ad4e' : '#fff',
+                        borderColor: '#f0ad4e',
+                        borderWidth: 2,
+                      }}
                     />
-                  </Right>
+                  </TouchableOpacity>
                 </Col>
               </Row>
             </View>
-            <Input placeholder="E-mail" style={Styles.inputForm} />
-            <Input placeholder="No. Telp" style={Styles.inputForm} />
-            <Input placeholder="Pekerjaan" style={Styles.inputForm} />
+            <Input
+              onChangeText={data => setEmail(data)}
+              placeholder="E-mail"
+              style={Styles.inputForm}
+            />
+            <Input
+              keyboardType={'numeric'}
+              onChangeText={data => setTelfon(data)}
+              placeholder="No. Telp"
+              style={Styles.inputForm}
+            />
             <Textarea
+              onChangeText={data => setAlamat(data)}
               style={Styles.textArea}
               rowSpan={4}
               bordered
               placeholder="Alamat"
+            />
+            <Input
+              secureTextEntry={true}
+              onChangeText={data => setPassword(data)}
+              placeholder="Password"
+              style={Styles.inputForm}
             />
             <Row>
               <Col>
@@ -92,7 +160,12 @@ register = ({navigation}) => {
                 </Button>
               </Col>
               <Col>
-                <Button info style={Styles.btnSave}>
+                <Button
+                  info
+                  onPress={() => {
+                    registerUser();
+                  }}
+                  style={Styles.btnSave}>
                   <Icon name="check" type="FontAwesome" />
                 </Button>
               </Col>
@@ -132,7 +205,7 @@ const Styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 2,
     height: SCREEN_HEIGHT * 0.08,
-    width: SCREEN_HEIGHT * 0.2,
+    width: SCREEN_WIDTH * 0.3,
     marginTop: SCREEN_HEIGHT * 0.02,
   },
   btnSave: {
@@ -142,7 +215,7 @@ const Styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 2,
     height: SCREEN_HEIGHT * 0.08,
-    width: SCREEN_HEIGHT * 0.2,
+    width: SCREEN_WIDTH * 0.3,
     marginTop: SCREEN_HEIGHT * 0.02,
   },
   textArea: {
@@ -155,7 +228,7 @@ const Styles = StyleSheet.create({
     paddingHorizontal: SCREEN_WIDTH * 0.1,
     borderRadius: 5,
     marginTop: SCREEN_HEIGHT * -0.03,
-    fontSize: SCREEN_HEIGHT * 0.05,
+    fontSize: SCREEN_WIDTH * 0.08,
     fontWeight: 'bold',
     color: '#fed330',
     alignSelf: 'center',

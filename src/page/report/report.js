@@ -17,17 +17,99 @@ import {
   Picker,
   Button,
   Grid,
+  Toast,
 } from 'native-base';
 import {StatusBar, Dimensions} from 'react-native';
+import {getDataLogin, getInLocation} from '../../helper/Asyncstorage';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import database from '@react-native-firebase/database';
+import moment from 'moment';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 report = ({navigation}) => {
   const [selected2, setSelected2] = useState(undefined);
-
+  const [dataUser, setDataUser] = useState();
+  const [dataLatitude, setDataLatitude] = useState();
+  const [dataLongtitude, setDataLongtitude] = useState();
+  const [kronologi, setKronologi] = useState();
+  const [namaLaporan, setNamaLaporan] = useState();
+  const [kriminal, setKriminal] = useState([
+    {id: 1, jenisKriminal: 'Pencurian Kendaraan Bermotor'},
+    {id: 2, jenisKriminal: 'Pencurian dengan Kekerasan'},
+    {id: 3, jenisKriminal: 'Narkoba'},
+    {id: 4, jenisKriminal: 'Penipuan'},
+  ]);
   const onValueChange = value => {
     setSelected2(value);
+  };
+  useEffect(() => {
+    dataLogin();
+  }, []);
+
+  const dataLogin = async () => {
+    let data = await getDataLogin();
+    data.length > 0 ? setDataUser(data) : null;
+
+    let location = await getInLocation();
+    location.la != undefined
+      ? (setDataLatitude(location.la), setDataLongtitude(location.lo))
+      : null;
+    console.log('get data locatioon');
+    console.log(location.length);
+    console.log(location.lo);
+  };
+
+  const dataLaporan = async () => {
+    let data = [];
+    await database()
+      .ref(`/DataLaporan`)
+      .once('value')
+      .then(snapshot => {
+        data = snapshot.val();
+      });
+    console.log(data.length);
+    simpanLaporan(data.length);
+  };
+
+  const simpanLaporan = no => {
+    console.log(selected2);
+    console.log(moment().format('l'));
+    console.log('simpan laporan');
+    console.log(dataLatitude);
+    console.log(dataLongtitude);
+    console.log(dataUser[0].telfon);
+    console.log(no);
+    console.log(namaLaporan);
+    console.log(kronologi);
+    database()
+      .ref(`/DataLaporan/${no}`)
+      .set({
+        jenisKriminal: selected2,
+        kronologi: kronologi,
+        namaPelapor: dataUser[0].nama,
+        noLaporan: no,
+        namaLaporan: namaLaporan,
+        nomerId: dataUser[0].noIdentitas,
+        status: 'Proses',
+        tanggal: moment().format('l'),
+        namaPolse: 'Polsekta Blimbing',
+        telfon: dataUser[0].telfon,
+        latitude: dataLatitude,
+        Longtitude: dataLongtitude,
+      })
+      .then(() => {
+        console.log('Data set.');
+        Toast.show({
+          text: 'Berhasil Membuat Laporan',
+          type: 'success',
+          duration: 800,
+        });
+        setTimeout(() => {
+          navigation.goBack(null);
+        }, 1000);
+      });
   };
 
   return (
@@ -57,7 +139,7 @@ report = ({navigation}) => {
                 style={{
                   fontWeight: 'bold',
                   color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
+                  fontSize: SCREEN_WIDTH * 0.065,
                   alignSelf: 'flex-start',
                 }}>
                 .Form
@@ -71,7 +153,7 @@ report = ({navigation}) => {
               <Text
                 style={{
                   color: '#ffffff',
-                  fontSize: SCREEN_HEIGHT * 0.05,
+                  fontSize: SCREEN_WIDTH * 0.065,
                   alignSelf: 'flex-start',
                 }}>
                 Laporan
@@ -123,20 +205,35 @@ report = ({navigation}) => {
               onValueChange={data => {
                 onValueChange(data);
               }}>
-              <Picker.Item label="Jenis Kejahatan" value="key0" />
-              <Picker.Item label="CURANMOR" value="key0" />
-              <Picker.Item label="Penipuan" value="key1" />
-              <Picker.Item label="CURAS" value="key2" />
-              <Picker.Item label="Narkoba" value="key3" />
+              <Picker.Item
+                key={0}
+                label={'Jenis Kriminal'}
+                value={'Pilih Jenis Kriminal'}
+              />
+              {kriminal.map(item => (
+                <Picker.Item
+                  key={item.id}
+                  label={item.jenisKriminal}
+                  value={item.jenisKriminal}
+                />
+              ))}
             </Picker>
           </Item>
           <Item floatingLabel style={{marginTop: '2%'}}>
-            <Label>Nama Laporan</Label>
-            <Input />
+            <Label style={{fontSize: 12}}>Nama Laporan</Label>
+            <Input
+              onChangeText={data => {
+                setNamaLaporan(data);
+              }}
+            />
           </Item>
           <Item style={{height: '22%', marginTop: '2%'}} floatingLabel>
-            <Label>Kronologi Laporan</Label>
-            <Input />
+            <Label style={{fontSize: 12}}>Kronologi Laporan</Label>
+            <Input
+              onChangeText={data => {
+                setKronologi(data);
+              }}
+            />
           </Item>
           <Icon
             name="location"
@@ -155,16 +252,19 @@ report = ({navigation}) => {
             }}>
             Polsekta Blimbing
           </Text>
-          <Button
-            rounded
-            style={{
-              marginTop: '5%',
-              width: '80%',
-              justifyContent: 'center',
-              backgroundColor: '#f1c40f',
-            }}>
-            <Text style={{fontWeight: 'bold'}}>Buat Laporan</Text>
-          </Button>
+          <TouchableOpacity onPress={() => dataLaporan()}>
+            <Button
+              rounded
+              style={{
+                marginTop: '5%',
+                width: '80%',
+                justifyContent: 'center',
+                backgroundColor: '#f1c40f',
+                alignSelf: 'center',
+              }}>
+              <Text style={{fontWeight: 'bold'}}>Buat Laporan</Text>
+            </Button>
+          </TouchableOpacity>
           <Text
             style={{
               fontSize: SCREEN_HEIGHT * 0.02,

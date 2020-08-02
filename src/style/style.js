@@ -18,11 +18,11 @@ const Styles = StyleSheet.create({
   textHeader: {
     color: '#273c75',
     fontWeight: 'bold',
-    fontSize: SCREEN_WIDTH * 0.06,
+    fontSize: SCREEN_WIDTH * 0.05,
   },
   textHeaderLeft: {
     color: '#273c75',
-    fontSize: SCREEN_WIDTH * 0.06,
+    fontSize: SCREEN_WIDTH * 0.05,
   },
   rowHeader: {
     justifyContent: 'center',

@@ -1,5 +1,6 @@
 import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
 import Geolocation from '@react-native-community/geolocation';
+import {inLocation} from './Asyncstorage';
 export const Location = async () => {
   let data = [];
 
@@ -20,7 +21,8 @@ export const Location = async () => {
         latitude = info.coords.latitude;
         longitude = info.coords.longitude;
         data.push(latitude, longitude);
-        console.log(data);
+        console.log('datanyaa looo2');
+        inLocation(data);
         return data;
       });
     })
@@ -32,7 +34,3 @@ export const Location = async () => {
   console.log(data);
   return data;
 };
-
-// const getLocation = async () => {
-
-// };

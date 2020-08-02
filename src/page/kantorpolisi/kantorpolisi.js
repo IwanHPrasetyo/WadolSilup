@@ -14,7 +14,7 @@ import {
   Button,
 } from 'native-base';
 import {Dimensions, StatusBar, SafeAreaView, StyleSheet} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -91,7 +91,7 @@ kantorpolisi = ({navigation}) => {
         <Body />
       </Header>
       <Content>
-        <SafeAreaView style={Styles.container}>
+        <View style={Styles.container}>
           <Text
             style={{
               paddingHorizontal: 16,
@@ -104,97 +104,98 @@ kantorpolisi = ({navigation}) => {
           <FlatList
             data={dataKantorPolisi}
             renderItem={({item}) => (
-              <View style={Styles.item}>
-                <Grid>
-                  <Row>
-                    <Col style={{flex: 3}}>
-                      <Row>
-                        <Col>
-                          <Row>
-                            <Col
-                              style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              }}>
-                              <Icon
-                                name="car-alt"
-                                type="FontAwesome5"
+              <ScrollView>
+                <View style={Styles.item}>
+                  <Grid>
+                    <Row>
+                      <Col style={{flex: 3}}>
+                        <Row>
+                          <Col>
+                            <Row>
+                              <Col
                                 style={{
-                                  fontSize: SCREEN_WIDTH * 0.05,
-                                  color: '#327BF6',
-                                }}
-                              />
-                            </Col>
-                            <Col
-                              style={{
-                                flex: 8,
-                                justifyContent: 'center',
-                                marginLeft: SCREEN_WIDTH * 0.01,
-                              }}>
-                              <Text numberOfLines={1} style={Styles.textItem}>
-                                {item.nama_kantor}
-                              </Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                      <Row style={{marginTop: SCREEN_HEIGHT * 0.006}}>
-                        <Col>
-                          <Row>
-                            <Col
-                              style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              }}>
-                              <Icon
-                                name="location-pin"
-                                type="Entypo"
+                                  flex: 1,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <Icon
+                                  name="car-alt"
+                                  type="FontAwesome5"
+                                  style={{
+                                    fontSize: SCREEN_WIDTH * 0.05,
+                                    color: '#327BF6',
+                                  }}
+                                />
+                              </Col>
+                              <Col
                                 style={{
-                                  fontSize: SCREEN_WIDTH * 0.05,
-                                  color: '#f1c40f',
-                                }}
-                              />
-                            </Col>
-                            <Col
-                              style={{
-                                flex: 8,
-                                justifyContent: 'center',
-                                marginLeft: SCREEN_WIDTH * 0.01,
-                              }}>
-                              <Text numberOfLines={1} style={Styles.textItem2}>
-                                {item.alamat}
-                              </Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col>
-                      <Button
-                        onPress={() =>
-                          navigation.navigate('MapScreen', {
-                            nama_kantor: item.nama_kantor,
-                            alamat: item.alamat,
-                            latitude: item.latitude,
-                            longitude: item.longitude,
-                          })
-                        }
-                        style={Styles.button}>
-                        <Icon
-                          name="google-maps"
-                          type="MaterialCommunityIcons"
-                        />
-                      </Button>
-                    </Col>
-                  </Row>
-                </Grid>
-              </View>
+                                  flex: 8,
+                                  justifyContent: 'center',
+                                  marginLeft: SCREEN_WIDTH * 0.01,
+                                }}>
+                                <Text numberOfLines={1} style={Styles.textItem}>
+                                  {item.nama_kantor}
+                                </Text>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                        <Row style={{marginTop: SCREEN_HEIGHT * 0.006}}>
+                          <Col>
+                            <Row>
+                              <Col
+                                style={{
+                                  flex: 1,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <Icon
+                                  name="location-pin"
+                                  type="Entypo"
+                                  style={{
+                                    fontSize: SCREEN_WIDTH * 0.05,
+                                    color: '#f1c40f',
+                                  }}
+                                />
+                              </Col>
+                              <Col
+                                style={{
+                                  flex: 8,
+                                  justifyContent: 'center',
+                                  marginLeft: SCREEN_WIDTH * 0.01,
+                                }}>
+                                <Text
+                                  numberOfLines={1}
+                                  style={Styles.textItem2}>
+                                  {item.alamat}
+                                </Text>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col>
+                        <Button
+                          onPress={() =>
+                            navigation.navigate('MapScreen', {
+                              nama_kantor: item.nama_kantor,
+                              alamat: item.alamat,
+                              latitude: item.latitude,
+                              longitude: item.longitude,
+                            })
+                          }
+                          style={Styles.button}>
+                          <Icon name="map-pin" type="Feather" />
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Grid>
+                </View>
+              </ScrollView>
             )}
             keyExtractor={item => item.nama_kantor}
           />
-        </SafeAreaView>
+        </View>
       </Content>
     </Container>
   );

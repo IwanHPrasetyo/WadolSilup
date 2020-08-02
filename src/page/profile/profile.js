@@ -13,17 +13,36 @@ import {
   Grid,
   Image,
   Thumbnail,
+  Button,
 } from 'native-base';
 import {StatusBar, StyleSheet, Dimensions} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {getDataLogin} from '../../helper/Asyncstorage';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 profile = ({navigation}) => {
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
+  let [dataUser, setDataUser] = useState([]);
+  useEffect(() => {
+    getUser();
+  }, []);
 
-  useEffect(() => {}, []);
-
+  const Logout = async () => {
+    try {
+      await AsyncStorage.clear();
+      setTimeout(() => {
+        navigation.navigate('LoginScreen');
+      }, 1000);
+    } catch (error) {
+      console.log('gagal hapus data login');
+    }
+  };
+  const getUser = async () => {
+    let data = await getDataLogin();
+    setDataUser(data);
+    console.log(data);
+  };
   return (
     <Container>
       <Header style={Styles.header}>
@@ -89,7 +108,6 @@ profile = ({navigation}) => {
                   style={{
                     borderColor: '#ffffff',
                     borderWidth: 4,
-                    elevation: 4,
                     borderRadius: 200,
                     height: SCREEN_HEIGHT * 0.3,
                     width: SCREEN_HEIGHT * 0.3,
@@ -119,7 +137,7 @@ profile = ({navigation}) => {
               color: '#273c75',
               fontSize: SCREEN_HEIGHT * 0.035,
             }}>
-            031831831081781
+            {dataUser.length != 0 ? dataUser[0].email : 'email'}
           </Text>
           <Text
             style={{
@@ -127,7 +145,7 @@ profile = ({navigation}) => {
               fontWeight: 'bold',
               color: '#273c75',
             }}>
-            M Fulan
+            {dataUser.length != 0 ? dataUser[0].nama : 'nama user'}
           </Text>
         </View>
         <View>
@@ -230,6 +248,32 @@ profile = ({navigation}) => {
           </Row>
         </View>
       </Content>
+      <TouchableOpacity onPress={() => Logout()}>
+        <View style={{width: '100%'}}>
+          <Button
+            style={{
+              backgroundColor: '#327BF6',
+              width: '100%',
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              justifyContent: 'center',
+            }}>
+            <Icon
+              style={{fontSize: SCREEN_WIDTH * 0.07}}
+              name="window-close"
+              type="FontAwesome"
+            />
+            <Text
+              style={{
+                marginLeft: -20,
+                fontSize: SCREEN_WIDTH * 0.04,
+                fontWeight: 'bold',
+              }}>
+              Logout
+            </Text>
+          </Button>
+        </View>
+      </TouchableOpacity>
     </Container>
   );
 };
