@@ -91,7 +91,7 @@ masterlaporan = ({navigation}) => {
                 style={{
                   fontWeight: 'bold',
                   color: '#ffffff',
-                  fontSize: SCREEN_WIDTH * 0.08,
+                  fontSize: SCREEN_WIDTH * 0.07,
                   alignSelf: 'flex-start',
                 }}>
                 .Riwayat
@@ -104,7 +104,7 @@ masterlaporan = ({navigation}) => {
               <Text
                 style={{
                   color: '#ffffff',
-                  fontSize: SCREEN_WIDTH * 0.08,
+                  fontSize: SCREEN_WIDTH * 0.07,
                   alignSelf: 'flex-start',
                 }}>
                 Laporan

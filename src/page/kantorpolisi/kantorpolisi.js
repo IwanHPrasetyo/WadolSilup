@@ -21,13 +21,6 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const dataKantorPolisi = [
   {
-    nama_kantor: 'Polwil Malang',
-    alamat: 'Jl. Singosari Malang',
-    telp: '(0341) 453466',
-    latitude: -7.9690962,
-    longitude: 112.6266054,
-  },
-  {
     nama_kantor: 'Polresta Malang',
     alamat: 'Jl. Slamet Riyadi Malang',
     telp: '(0341) 366444',

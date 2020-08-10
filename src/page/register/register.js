@@ -44,18 +44,17 @@ register = ({navigation}) => {
   };
   const registerUser = () => {
     database()
-      .ref(`/DataPolapor/${telfon}`)
+      .ref(`/DataPolapor/${noId}`)
       .set({
         noIdentitas: noId,
         nama: nama,
         jenisKelamin: jenisKelamin,
-        email: email,
+        // email: email,
         telfon: telfon,
         alamat: alamat,
         password: password,
       })
       .then(() => {
-        console.log('Data set.');
         Toast.show({
           text: 'Daftar Berhasil',
           type: 'success',
@@ -127,11 +126,11 @@ register = ({navigation}) => {
                 </Col>
               </Row>
             </View>
-            <Input
+            {/* <Input
               onChangeText={data => setEmail(data)}
               placeholder="E-mail"
               style={Styles.inputForm}
-            />
+            /> */}
             <Input
               keyboardType={'numeric'}
               onChangeText={data => setTelfon(data)}

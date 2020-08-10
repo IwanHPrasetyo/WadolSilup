@@ -22,53 +22,52 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const dataKantorPolisi = [
   {
-    pengirim: 'Polwil Malang',
-    pesan: 'Laporan anda sedang diproses',
-    waktu: '08:00',
-    pesanMasuk: 1,
-    image: require('../../asset/image/polisi1.jpeg'),
-  },
-  {
     pengirim: 'Polresta Malang',
     pesan: 'Kasus dalam penanganan',
     waktu: '20:00',
     pesanMasuk: 4,
-    image: require('../../asset/image/polisi2.jpeg'),
+    image: 'https://ui-avatars.com/api/?size=256&name=Polresta Malang',
+    // image: require('../../asset/image/polisi2.jpeg'),
   },
   {
     pengirim: 'Polsekta Blimbing',
     pesan: 'Kasus Selesai',
     waktu: '14:28',
     pesanMasuk: 2,
-    image: require('../../asset/image/polisi3.jpg'),
+    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Blimbing',
+    // image: require('../../asset/image/polisi3.jpg'),
   },
   {
     pengirim: 'Polsekta Kedungkandang',
     pesan: 'Segera meluncur ke TKP',
     waktu: '08:10',
     pesanMasuk: 1,
-    image: require('../../asset/image/polisi4.jpg'),
+    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Kedungkandang',
+    // image: require('../../asset/image/polisi4.jpg'),
   },
   {
     pengirim: 'Polsekta Klojen',
     pesan: 'Laporan akan segera kami proses',
     waktu: '08:15',
     pesanMasuk: 0,
-    image: require('../../asset/image/polisi5.jpg'),
+    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Klojen',
+    // image: require('../../asset/image/polisi5.jpg'),
   },
   {
     pengirim: 'Polsekta Lowokwaru',
     pesan: 'Trimakasih atas laporan anda',
     waktu: '03:00',
     pesanMasuk: 2,
-    image: require('../../asset/image/polisi6.jpg'),
+    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Lowokwaru',
+    // image: require('../../asset/image/polisi6.jpg'),
   },
   {
     pengirim: 'Polsekta Sukun',
     pesan: 'Kasus dalam penanganan',
     waktu: '10:18',
     pesanMasuk: 0,
-    image: require('../../asset/image/polisi7.jpg'),
+    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Sukun',
+    // image: require('../../asset/image/polisi7.jpg'),
   },
 ];
 
@@ -132,7 +131,11 @@ chat = ({navigation}) => {
                         flex: 1.5,
                         justifyContent: 'center',
                       }}>
-                      <Thumbnail source={item.image} />
+                      <Thumbnail
+                        source={{
+                          uri: item.image,
+                        }}
+                      />
                       {item.pesanMasuk != 0 ? (
                         <View
                           style={{

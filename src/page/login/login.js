@@ -23,6 +23,7 @@ import {Dimensions, Image, StatusBar, ToastAndroid} from 'react-native';
 import Styles from '../../style/style';
 import database from '@react-native-firebase/database';
 import {loginData, getDataLogin} from '../../helper/Asyncstorage';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -33,6 +34,7 @@ login = ({navigation}) => {
   let [showPass, setShowPass] = useState(true);
   const [id, setId] = useState();
   const [pass, setPass] = useState();
+  const [remember, setRemember] = useState(false);
 
   useEffect(() => {
     dataLogin();
@@ -132,7 +134,7 @@ login = ({navigation}) => {
                 style={{color: username == true ? '#4b7bec' : '#afafaf'}}
               />
               <Input
-                placeholder="No Telfon"
+                placeholder="NIK"
                 onFocus={() => {
                   setUsername(true), setPassword(false);
                 }}
@@ -219,43 +221,42 @@ login = ({navigation}) => {
             }}>
             <Text style={{fontWeight: 'bold', color: '#4b7bec'}}>Daftar</Text>
           </Button>
-          <Text
-            style={{
-              color: '#273c75',
-              fontWeight: 'bold',
-              alignSelf: 'center',
-              fontSize: SCREEN_HEIGHT * 0.026,
-              marginTop: SCREEN_HEIGHT * 0.02,
-            }}>
-            Login dengan akun
-          </Text>
-          <Grid style={{marginTop: SCREEN_HEIGHT * 0.01}}>
+          <Grid style={{width: SCREEN_WIDTH * 0.7, alignSelf: 'center'}}>
             <Row>
               <Col
                 style={{
-                  width: '50%',
+                  flex: 1,
+                  justifyContent: 'flex-end',
                   alignItems: 'flex-end',
-                  paddingRight: '2%',
                 }}>
-                <Icon
-                  name="facebook-square"
-                  type="FontAwesome"
-                  style={{color: '#4b7bec', fontSize: SCREEN_HEIGHT * 0.06}}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    setRemember(!remember);
+                  }}>
+                  <View
+                    style={{
+                      height: 20,
+                      width: 20,
+                      backgroundColor: remember ? '#fbc531' : '#ffffff',
+                      borderRadius: 10,
+                      marginRight: 10,
+                      borderColor: '#fbc531',
+                      borderWidth: 2,
+                    }}
+                  />
+                </TouchableOpacity>
               </Col>
-              <Col
-                style={{
-                  width: '50%',
-                  alignItems: 'flex-start',
-                  paddingLeft: '2%',
-                }}>
-                <Icon
-                  name="google-plus-square"
-                  type="FontAwesome"
-                  style={{color: '#e74c3c', fontSize: SCREEN_HEIGHT * 0.06}}
-                />
+              <Col style={{flex: 2}}>
+                <Text
+                  style={{
+                    color: '#273c75',
+                    fontWeight: 'bold',
+                    fontSize: SCREEN_HEIGHT * 0.026,
+                    marginTop: SCREEN_HEIGHT * 0.02,
+                  }}>
+                  Remember me
+                </Text>
               </Col>
-              <Col />
             </Row>
           </Grid>
         </View>
