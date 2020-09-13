@@ -28,7 +28,7 @@ import database from '@react-native-firebase/database';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-register = ({navigation}) => {
+const register = ({route, navigation}) => {
   const [radio, setRadio] = useState(true);
   const [noId, setNoid] = useState('');
   const [nama, setNama] = useState('');
@@ -37,6 +37,25 @@ register = ({navigation}) => {
   const [telfon, setTelfon] = useState('');
   const [alamat, setAlamat] = useState('');
   const [password, setPassword] = useState('');
+  const [dataUser, setDataUser] = useState([]);
+
+  useEffect(() => {
+    setData();
+  });
+
+  const setData = async () => {
+    const data = navigation.getParam('dataKTP');
+    setDataUser(data);
+    setNoid(data[0].nik);
+    setNama(data[0].nama);
+    setJenisKelamin(data[0].jenisKelamin === 'Laki-Laki' ? 'L' : 'P');
+    setRadio(data[0].jenisKelamin === 'Laki-Laki' ? true : false);
+    setAlamat(
+      `Desa ${data[0].keldesa} RT/RW ${data[0].rtrw} Kecamatan ${
+        data[0].kecamatan
+      } `,
+    );
+  };
 
   const radioG = data => {
     setJenisKelamin(data ? 'L' : 'P');
@@ -61,7 +80,7 @@ register = ({navigation}) => {
           duration: 800,
         });
         setTimeout(() => {
-          navigation.goBack(null);
+          navigation.navigation('LoginScreen');
         }, 1000);
       });
   };
@@ -75,6 +94,7 @@ register = ({navigation}) => {
           <View style={Styles.cardForm}>
             <Text style={Styles.tvHallo}>Hallo Police</Text>
             <Input
+              value={noId}
               onChangeText={data => {
                 setNoid(data);
               }}
@@ -82,6 +102,7 @@ register = ({navigation}) => {
               style={Styles.inputForm}
             />
             <Input
+              value={nama}
               onChangeText={data => setNama(data)}
               placeholder="Nama Lengkap"
               style={Styles.inputForm}
@@ -131,18 +152,20 @@ register = ({navigation}) => {
               placeholder="E-mail"
               style={Styles.inputForm}
             /> */}
-            <Input
-              keyboardType={'numeric'}
-              onChangeText={data => setTelfon(data)}
-              placeholder="No. Telp"
-              style={Styles.inputForm}
-            />
             <Textarea
+              value={alamat}
               onChangeText={data => setAlamat(data)}
               style={Styles.textArea}
               rowSpan={4}
               bordered
               placeholder="Alamat"
+            />
+            <Input
+              value={telfon}
+              keyboardType={'numeric'}
+              onChangeText={data => setTelfon(data)}
+              placeholder="No. Telp"
+              style={Styles.inputForm}
             />
             <Input
               secureTextEntry={true}
@@ -153,7 +176,7 @@ register = ({navigation}) => {
             <Row>
               <Col>
                 <Button
-                  onPress={() => navigation.goBack(null)}
+                  onPress={() => navigation.navigation('LoginScreen')}
                   style={Styles.btnCancel}>
                   <Icon name="close" type="FontAwesome" />
                 </Button>
@@ -175,7 +198,8 @@ register = ({navigation}) => {
               <Text style={Styles.textAkun}>Sudah punya akun ?</Text>
             </Col>
             <Col style={{flex: 1, alignItems: 'flex-start'}}>
-              <TouchableOpacity onPress={() => navigation.goBack(null)}>
+              <TouchableOpacity
+                onPress={() => navigation.navigation('LoginScreen')}>
                 <Text
                   style={[
                     Styles.textAkun,

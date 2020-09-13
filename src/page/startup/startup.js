@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, Image, TouchableOpacity} from 'react-native';
 import {
   Container,
@@ -15,20 +15,46 @@ import {
 import Styles from '../../style/style';
 import database from '@react-native-firebase/database';
 import {getDataLogin} from '../../helper/Asyncstorage';
-import {Location} from '../../helper/Premissions';
+import {ActivityIndicator} from 'react-native';
+// import {Location} from '../../helper/Premissions';
 
-startup = ({navigation}) => {
+const startup = ({navigation}) => {
   const [onLogin, setOnlogin] = useState(false);
   const [onButton, setOnButton] = useState('10%');
   const [dataUser, setDataUser] = useState([]);
 
   useEffect(() => {
-    Location();
     dataLogin();
+    // dataKTP();
     return () => {
       setOnlogin(false);
     };
-  }, []);
+  });
+
+  const dataKTP = nik => {
+    nik = '3509072101930001';
+    database()
+      .ref(`/DatabaseKTP/${nik}`)
+      .set({
+        nik: nik,
+        nama: 'Indra Kurniawan',
+        tempatLahir: 'Jember',
+        tanggalLahir: '21-01-1993',
+        jenisKelamin: 'Laki-Laki',
+        golonganDarah: '-',
+        alamat: 'Dukuh Tengah',
+        rtrw: '001/002',
+        keldesa: 'Bungkal',
+        kecamatan: 'Bungkal',
+        agama: 'Islam',
+        statusPerkawinan: 'Kawin',
+        pekerjaan: 'Wiraswasta',
+        kewarganegaraan: 'WNI',
+      })
+      .then(() => {
+        console.log('Berhasil Tambah data KTP');
+      });
+  };
 
   const dataLogin = async () => {
     (await getDataLogin()).length > 0
@@ -69,8 +95,8 @@ startup = ({navigation}) => {
         <View style={{marginTop: '6%', paddingHorizontal: onButton}}>
           <Button
             onPress={() => {
-              onButton == '10%' ? setOnButton('40%') : setOnButton('10%');
-              setOnlogin(!onLogin);
+              // onButton == '10%' ? setOnButton('40%') : setOnButton('10%');
+              // setOnlogin(!onLogin);
               setTimeout(() => {
                 navigation.navigate('LoginScreen');
               }, 1000);
@@ -84,7 +110,7 @@ startup = ({navigation}) => {
               elevation: 4,
             }}>
             {onLogin == true ? (
-              <Spinner color="#fff" />
+              <ActivityIndicator size="small" color="#Fff" />
             ) : (
               <Text style={{fontWeight: 'bold'}}>Let's Report</Text>
             )}

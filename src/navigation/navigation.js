@@ -13,6 +13,7 @@ import ChatScreen from '../page/chat/chat';
 import ReportScreen from '../page/report/report';
 import RegisterScreen from '../page/register/register';
 import ChatRoomScreen from '../page/chatRoom/chatRoom';
+import CekKTPScreen from '../page/cekKTP/cekKTP';
 
 import {Icon, View} from 'native-base';
 
@@ -83,6 +84,9 @@ const MainNavigation = createStackNavigator(
     },
     ChatRoomScreen: {
       screen: ChatRoomScreen,
+    },
+    CekKTPScreen: {
+      screen: CekKTPScreen,
     },
   },
   {

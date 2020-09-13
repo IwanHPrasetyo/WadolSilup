@@ -28,7 +28,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-login = ({navigation}) => {
+const login = ({navigation}) => {
   const [username, setUsername] = useState(false);
   const [password, setPassword] = useState(false);
   let [showPass, setShowPass] = useState(true);
@@ -204,7 +204,7 @@ login = ({navigation}) => {
             <Text style={{fontWeight: 'bold'}}>Login</Text>
           </Button>
           <Button
-            onPress={() => navigation.navigate('RegisterScreen')}
+            onPress={() => navigation.navigate('CekKTPScreen')}
             style={{
               borderRadius: 10,
               width: '80%',

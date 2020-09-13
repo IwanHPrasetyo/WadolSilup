@@ -12,6 +12,7 @@ import Chat from './src/page/chat/chat';
 import Register from './src/page/register/register';
 import Maps from './src/page/maps/maps';
 import ChatRoom from './src/page/chatRoom/chatRoom';
+import CekKtp from './src/page/cekKTP/cekKTP';
 
 const App = () => {
   useEffect(() => {

@@ -26,7 +26,7 @@ import {
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-dashboard = ({navigation}) => {
+const dashboard = ({navigation}) => {
   const [images, setImages] = useState([
     require('../../asset/image/banner1.png'),
     require('../../asset/image/banner2.jpg'),
@@ -237,6 +237,51 @@ dashboard = ({navigation}) => {
                     />
                     <Text style={{fontWeight: 'bold', color: '#273c75'}}>
                       Profil
+                    </Text>
+                  </View>
+                </Button>
+              </Col>
+            </Row>
+
+            <Row
+              style={{
+                height: SCREEN_HEIGHT * 0.1,
+                marginTop: SCREEN_HEIGHT * 0.02,
+              }}>
+              <Col
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Button
+                  onPress={() => {
+                    console.log('SOS');
+                  }}
+                  style={{
+                    height: '100%',
+                    backgroundColor: 'transparent',
+                    elevation: 0,
+                    width: '100%',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      height: '100%',
+                      borderRadius: 10,
+                      backgroundColor: '#ffffff',
+                      elevation: 4,
+                      width: '80%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#273c75',
+                        fontSize: 20,
+                      }}>
+                      SOS
                     </Text>
                   </View>
                 </Button>
