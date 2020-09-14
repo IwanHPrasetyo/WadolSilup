@@ -28,7 +28,7 @@ import database from '@react-native-firebase/database';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const register = ({route, navigation}) => {
+const register = ({navigation}) => {
   const [radio, setRadio] = useState(true);
   const [noId, setNoid] = useState('');
   const [nama, setNama] = useState('');
@@ -80,7 +80,7 @@ const register = ({route, navigation}) => {
           duration: 800,
         });
         setTimeout(() => {
-          navigation.navigation('LoginScreen');
+          navigation.navigate('LoginScreen');
         }, 1000);
       });
   };
@@ -176,7 +176,7 @@ const register = ({route, navigation}) => {
             <Row>
               <Col>
                 <Button
-                  onPress={() => navigation.navigation('LoginScreen')}
+                  onPress={() => navigation.navigate('LoginScreen')}
                   style={Styles.btnCancel}>
                   <Icon name="close" type="FontAwesome" />
                 </Button>
@@ -199,7 +199,7 @@ const register = ({route, navigation}) => {
             </Col>
             <Col style={{flex: 1, alignItems: 'flex-start'}}>
               <TouchableOpacity
-                onPress={() => navigation.navigation('LoginScreen')}>
+                onPress={() => navigation.navigate('LoginScreen')}>
                 <Text
                   style={[
                     Styles.textAkun,
