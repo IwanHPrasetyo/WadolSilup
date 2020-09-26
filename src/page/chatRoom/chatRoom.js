@@ -28,12 +28,8 @@ import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-// let pesan = [
-
-// ];
-
-chatRoom = ({navigation}) => {
-  let [msg, setMsg] = useState('');
+const chatRoom = ({navigation}) => {
+  let [msg, setMsg] = useState();
   let [pesan, setPesan] = useState([
     {
       status: 'pengirim',
@@ -74,9 +70,7 @@ chatRoom = ({navigation}) => {
       pesan: 'Sama - sama',
     },
   ]);
-  let [refresh, setRefresh] = useState(true);
-
-  useEffect(() => {}, [refresh]);
+  const [refresh, setRefresh] = useState(true);
 
   const sendMessage = async msg => {
     let data = {
@@ -96,11 +90,7 @@ chatRoom = ({navigation}) => {
             onPress={() => navigation.goBack()}
             name="arrow-circle-left"
             type="FontAwesome"
-            style={{
-              color: '#ffffff',
-              fontSize: SCREEN_WIDTH * 0.1,
-              paddingLeft: SCREEN_WIDTH * 0.01,
-            }}
+            style={Styles.viewIcon}
           />
         </Left>
         <Body style={{flex: 3}}>
@@ -169,22 +159,7 @@ chatRoom = ({navigation}) => {
                 renderItem={({item}) => (
                   <>
                     {item.status == 'pengirim' ? (
-                      <View
-                        style={{
-                          alignSelf: 'flex-start',
-                          backgroundColor: '#327BF6',
-                          width: SCREEN_WIDTH * 0.5,
-                          marginTop: '2%',
-                          marginBottom: '2%',
-                          paddingHorizontal: '4%',
-                          paddingVertical: '3%',
-                          borderBottomLeftRadius: 20,
-                          borderTopRightRadius: 20,
-                          borderTopLeftRadius: 5,
-                          borderBottomRightRadius: 20,
-                          marginLeft: '4%',
-                          elevation: 5,
-                        }}>
+                      <View style={Styles.viewPengirim}>
                         <Text style={{color: '#ffffff', fontWeight: 'bold'}}>
                           {item.pesan}
                         </Text>
@@ -227,7 +202,7 @@ chatRoom = ({navigation}) => {
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
           }}>
-          <Col style={{flex: 4, height: '70%'}}>
+          <Col style={{flex: 4, height: '80%'}}>
             <Input
               onChangeText={data => setMsg(data)}
               style={{
@@ -263,10 +238,28 @@ const Styles = StyleSheet.create({
   container: {flex: 1},
   header: {
     height: SCREEN_HEIGHT * 0.1,
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
     paddingTop: '1%',
     backgroundColor: '#327BF6',
+  },
+  viewPengirim: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#327BF6',
+    width: SCREEN_WIDTH * 0.5,
+    marginTop: '2%',
+    marginBottom: '2%',
+    paddingHorizontal: '4%',
+    paddingVertical: '3%',
+    borderBottomLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 5,
+    borderBottomRightRadius: 20,
+    marginLeft: '4%',
+    elevation: 5,
+  },
+  viewIcon: {
+    color: '#ffffff',
+    fontSize: SCREEN_WIDTH * 0.1,
+    paddingLeft: SCREEN_WIDTH * 0.01,
   },
 });
 
