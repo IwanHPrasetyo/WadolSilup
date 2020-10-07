@@ -64,7 +64,7 @@ const dataKantorPolisi = [
   },
 ];
 
-kantorpolisi = ({navigation}) => {
+const kantorpolisi = ({navigation}) => {
   return (
     <Container>
       <Header style={{backgroundColor: '#327BF6'}}>

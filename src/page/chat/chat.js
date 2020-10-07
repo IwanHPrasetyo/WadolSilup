@@ -105,6 +105,51 @@ const dataKantorPolisi = [
   },
 ];
 
+const dataKontak = [
+  {
+    nama_kantor: 'Polresta Malang',
+    alamat: 'Jl. Slamet Riyadi Malang',
+    telp: '(0341) 366444',
+    latitude: -7.9716824,
+    longitude: 112.6305915,
+  },
+  {
+    nama_kantor: 'Polsekta Blimbing',
+    alamat: 'Jl. Raden Intan No.6 Malang',
+    telp: '(0341) 491304',
+    latitude: -7.9299114,
+    longitude: 112.6483513,
+  },
+  {
+    nama_kantor: 'Polsekta Kedungkandang',
+    alamat: 'Jl. Ki Ageng Gribig 96 Malang',
+    telp: '(0341) 325057',
+    latitude: -7.9934269,
+    longitude: 112.6460037,
+  },
+  {
+    nama_kantor: 'Polsekta Klojen',
+    alamat: 'Jl. Kelut 11 Malang',
+    telp: '(0341) 361667',
+    latitude: -7.9808747,
+    longitude: 112.6233234,
+  },
+  {
+    nama_kantor: 'Polsekta Lowokwaru',
+    alamat: 'Jl. Lowokwaru-Malang',
+    telp: '(0341) 472392',
+    latitude: -7.9413999,
+    longitude: 112.6071599,
+  },
+  {
+    nama_kantor: 'Polsekta Sukun',
+    alamat: 'Jl. Kol Sugiono No.5 Malang',
+    telp: '(0341) 368638',
+    latitude: -8.0042733,
+    longitude: 112.6163261,
+  },
+];
+
 const chat = ({navigation}) => {
   const [active, setActive] = useState(false);
 
@@ -146,7 +191,7 @@ const chat = ({navigation}) => {
         </Body>
         <Right style={{paddingRight: 20}}>
           <Icon
-            onPress={() => navigation.goBack()}
+            onPress={() => setActive(true)}
             name="pencil"
             type="FontAwesome"
             style={{
@@ -233,21 +278,65 @@ const chat = ({navigation}) => {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={true}
+          visible={active}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-
-              <TouchableHighlight
-                style={{...styles.openButton, backgroundColor: '#2196F3'}}
-                onPress={() => {
-                  // setModalVisible(!modalVisible);
+              <View
+                style={{
+                  position: 'absolute',
+                  top: -20,
+                  right: -5,
+                  height: 40,
+                  width: 40,
+                  zIndex: 2,
+                  backgroundColor: '#afafaf',
+                  borderRadius: 80,
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </TouchableHighlight>
+                <Icon
+                  onPress={() => setActive(false)}
+                  name="close"
+                  type="FontAwesome"
+                  style={{
+                    color: '#ffffff',
+                    fontSize: SCREEN_WIDTH * 0.1,
+                  }}
+                />
+              </View>
+              <FlatList
+                data={dataKontak}
+                style={{marginTop: 20, marginBottom: 20, zIndex: 1}}
+                renderItem={({item}) => (
+                  <View
+                    style={{
+                      height: SCREEN_HEIGHT * 0.1,
+                      width: SCREEN_WIDTH * 0.8,
+                      marginBottom: 10,
+                      marginHorizontal: 10,
+                      backgroundColor: '#327BF6',
+                      justifyContent: 'center',
+                      paddingLeft: 10,
+                      borderRadius: 5,
+                      elevation: 2,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: '#ffffff',
+                        fontWeight: 'bold',
+                      }}>
+                      {item.nama_kantor}
+                    </Text>
+                    <Text style={{fontSize: 12, color: '#ffffff'}}>
+                      {item.telp}
+                    </Text>
+                  </View>
+                )}
+              />
             </View>
           </View>
         </Modal>
@@ -264,10 +353,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
+    height: '90%',
+    width: '90%',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {

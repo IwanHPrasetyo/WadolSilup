@@ -30,6 +30,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const chatRoom = ({navigation}) => {
   let [msg, setMsg] = useState();
+
   let [pesan, setPesan] = useState([
     {
       status: 'pengirim',
