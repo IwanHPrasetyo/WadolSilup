@@ -73,8 +73,6 @@ const kontak = ({navigation}) => {
       .then(item => {
         data.push(data.val());
       });
-
-    console.log('get kontak');
   };
 
   return (
