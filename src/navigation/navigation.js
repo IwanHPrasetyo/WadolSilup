@@ -14,6 +14,8 @@ import ReportScreen from '../page/report/report';
 import RegisterScreen from '../page/register/register';
 import ChatRoomScreen from '../page/chatRoom/chatRoom';
 import CekKTPScreen from '../page/cekKTP/cekKTP';
+import MainChat from '../page/mainChat/mainChat';
+import Kontak from '../page/kontak/kontak';
 
 import {Icon, View} from 'native-base';
 
@@ -87,6 +89,12 @@ const MainNavigation = createStackNavigator(
     },
     CekKTPScreen: {
       screen: CekKTPScreen,
+    },
+    MainChat: {
+      screen: MainChat,
+    },
+    Kontak: {
+      screen: Kontak,
     },
   },
   {

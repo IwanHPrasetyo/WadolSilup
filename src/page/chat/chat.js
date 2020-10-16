@@ -25,6 +25,7 @@ import {
 } from 'react-native-gesture-handler';
 import {Alert} from 'react-native';
 import {StyleSheet} from 'react-native';
+import FabHome from '../../component/fabToHome';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -155,55 +156,10 @@ const chat = ({navigation}) => {
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#327BF6'}}>
-        <StatusBar backgroundColor="#327BF6" barStyle="light-content" />
-        <Left>
-          <Icon
-            onPress={() => navigation.goBack()}
-            name="arrow-circle-left"
-            type="FontAwesome"
-            style={{
-              color: '#ffffff',
-              fontSize: SCREEN_WIDTH * 0.1,
-              paddingLeft: SCREEN_WIDTH * 0.01,
-            }}
-          />
-        </Left>
-        <Body>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: '#ffffff',
-              fontSize: SCREEN_WIDTH * 0.05,
-              alignSelf: 'flex-start',
-            }}>
-            .M
-            <Text
-              style={{
-                fontWeight: null,
-                color: '#ffffff',
-                fontSize: SCREEN_WIDTH * 0.05,
-                alignSelf: 'flex-start',
-              }}>
-              essages
-            </Text>
-          </Text>
-        </Body>
-        <Right style={{paddingRight: 20}}>
-          <Icon
-            onPress={() => setActive(true)}
-            name="pencil"
-            type="FontAwesome"
-            style={{
-              color: '#ffffff',
-              fontSize: SCREEN_WIDTH * 0.08,
-            }}
-          />
-        </Right>
-      </Header>
       <Content style={{backgroundColor: '#327BF6'}}>
         <FlatList
           data={dataKantorPolisi}
+          style={{marginTop: 16, marginBottom: 16, zIndex: 1}}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() => navigation.navigate('ChatRoomScreen')}>
@@ -341,6 +297,7 @@ const chat = ({navigation}) => {
           </View>
         </Modal>
       </Content>
+      <FabHome navigation={navigation} />
     </Container>
   );
 };
@@ -351,6 +308,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  fabView: {
+    position: 'absolute',
+    top: '80%',
+    left: '75%',
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 60,
+    width: 60,
+    elevation: 2,
+    backgroundColor: '#f9ca24',
   },
   modalView: {
     height: '90%',

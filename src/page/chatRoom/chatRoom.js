@@ -32,44 +32,44 @@ const chatRoom = ({navigation}) => {
   let [msg, setMsg] = useState();
 
   let [pesan, setPesan] = useState([
-    {
-      status: 'pengirim',
-      pesan: 'Hallo Polres malang',
-    },
-    {
-      status: 'penerima',
-      pesan: 'Hallo Iwan, ada yang bisa kami bantu ?',
-    },
-    {
-      status: 'pengirim',
-      pesan: 'Saya mau tanya soal laporan saya',
-    },
-    {
-      status: 'pengirim',
-      pesan: 'Apakah sudah diproses ?',
-    },
-    {
-      status: 'penerima',
-      pesan:
-        'Untuk saat ini laporan dari bapak sudah kami proses dan sedang dalam penyelidikan',
-    },
-    {
-      status: 'pengirim',
-      pesan: 'Trimakasih banyak atas respon cepatnya',
-    },
-    {
-      status: 'penerima',
-      pesan:
-        'Untuk perkemabangan laporan selanjutnya akan kami informasikan secara berkala kepada anda',
-    },
-    {
-      status: 'pengirim',
-      pesan: 'Trimakasih banyak atas perhatianya',
-    },
-    {
-      status: 'penerima',
-      pesan: 'Sama - sama',
-    },
+    // {
+    //   status: 'pengirim',
+    //   pesan: 'Hallo Polres malang',
+    // },
+    // {
+    //   status: 'penerima',
+    //   pesan: 'Hallo Iwan, ada yang bisa kami bantu ?',
+    // },
+    // {
+    //   status: 'pengirim',
+    //   pesan: 'Saya mau tanya soal laporan saya',
+    // },
+    // {
+    //   status: 'pengirim',
+    //   pesan: 'Apakah sudah diproses ?',
+    // },
+    // {
+    //   status: 'penerima',
+    //   pesan:
+    //     'Untuk saat ini laporan dari bapak sudah kami proses dan sedang dalam penyelidikan',
+    // },
+    // {
+    //   status: 'pengirim',
+    //   pesan: 'Trimakasih banyak atas respon cepatnya',
+    // },
+    // {
+    //   status: 'penerima',
+    //   pesan:
+    //     'Untuk perkemabangan laporan selanjutnya akan kami informasikan secara berkala kepada anda',
+    // },
+    // {
+    //   status: 'pengirim',
+    //   pesan: 'Trimakasih banyak atas perhatianya',
+    // },
+    // {
+    //   status: 'penerima',
+    //   pesan: 'Sama - sama',
+    // },
   ]);
   const [refresh, setRefresh] = useState(true);
 

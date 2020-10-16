@@ -178,7 +178,7 @@ const dashboard = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Button
-                  onPress={() => navigation.navigate('ChatScreen')}
+                  onPress={() => navigation.navigate('MainChat')}
                   style={{
                     height: '100%',
                     backgroundColor: 'transparent',
