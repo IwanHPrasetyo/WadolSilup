@@ -213,44 +213,31 @@ const chatRoom = ({navigation}) => {
           />
         </ScrollView>
       </View>
-      <Row
-        style={{
-          flex: 1,
-          paddingVertical: '2%',
-          paddingHorizontal: '2%',
-          backgroundColor: '#327BF6',
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
-        }}>
-        <Col style={{flex: 4, height: '80%'}}>
-          <Input
-            onChangeText={data => setMsg(data)}
-            style={{
-              backgroundColor: '#ffffff',
-              height: '80%',
-              borderRadius: 5,
-              marginLeft: '5%',
-            }}
-            placeholder="Pesan"
-          />
-        </Col>
-        <Col
+      <View style={{flexDirection: 'row', backgroundColor: '#327BF6'}}>
+        <Input
           style={{
-            flex: 1,
-            height: '70%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Icon
-            onPress={() => {
-              sendMessage(msg);
-            }}
-            style={{color: '#ffffff'}}
-            name="rocket"
-            type="FontAwesome"
-          />
-        </Col>
-      </Row>
+            flex: 5,
+            backgroundColor: '#ffffff',
+            height: '80%',
+            marginLeft: 10,
+            marginRight: 10,
+            alignSelf: 'center',
+            borderRadius: 5,
+            backgroundColor: 'red',
+          }}
+          onChangeText={data => setMsg(data)}
+          placeholder="Pesan"
+        />
+
+        <Icon
+          onPress={() => {
+            sendMessage(msg);
+          }}
+          style={{flex: 1, color: '#ffffff', alignSelf: 'center'}}
+          name="rocket"
+          type="FontAwesome"
+        />
+      </View>
     </Container>
   );
 };
