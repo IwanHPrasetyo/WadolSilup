@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Content, Text, Thumbnail, Icon} from 'native-base';
+import {Container, Content, Text, Thumbnail, Icon, Spinner} from 'native-base';
 import {FlatList, View, Dimensions} from 'react-native';
 import FabToHome from '../../component/fabToHome';
 import database from '@react-native-firebase/database';
@@ -8,7 +8,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const dataKontak = [
+const data = [
   {
     nama_kantor: 'Polresta Malang',
     alamat: 'Jl. Slamet Riyadi Malang',
@@ -60,77 +60,97 @@ const dataKontak = [
 ];
 
 const kontak = ({navigation}) => {
+  const [dataKontak, setDataKontak] = useState([]);
+
   useEffect(() => {
     getKontak();
-  });
+  }, []);
 
   const getKontak = async () => {
-    const data = [];
-
     await database()
       .ref(`/DataPolsek/`)
       .once('value')
-      .then(item => {
-        data.push(data.val());
+      .then(async item => {
+        const data = item.val().filter(item => {
+          return item != null;
+        });
+        await setDataKontak(data);
       });
   };
 
   return (
     <Container>
-      <Content style={{backgroundColor: '#327BF6'}}>
-        <FlatList
-          data={dataKontak}
-          style={{marginTop: 20, marginBottom: 20, zIndex: 1}}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ChatRoomScreen')}>
-              <View
-                style={{
-                  height: SCREEN_HEIGHT * 0.12,
-                  width: '90%',
-                  alignSelf: 'center',
-                  marginBottom: 10,
-                  backgroundColor: '#fff',
-                  justifyContent: 'center',
-                  paddingLeft: 10,
-                  borderRadius: 5,
-                  elevation: 2,
-                  flexDirection: 'row',
-                }}>
-                <View style={{flex: 1, justifyContent: 'center'}}>
-                  <Thumbnail
-                    source={{
-                      uri: item.image,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{flex: 3, justifyContent: 'center', paddingLeft: 10}}>
-                  <Text
-                    numberOfLines={1}
+      <View
+        style={{backgroundColor: '#327BF6', flex: 1, justifyContent: 'center'}}>
+        {dataKontak.length <= 0 ? (
+          <>
+            <Spinner style={{alignSelf: 'center'}} />
+          </>
+        ) : (
+          <>
+            <FlatList
+              data={dataKontak}
+              style={{marginTop: 20, marginBottom: 20, zIndex: 1}}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('ChatRoomScreen', {data: item})
+                  }>
+                  <View
                     style={{
-                      fontSize: 12,
-                      fontWeight: 'bold',
-                      color: '#273c75',
+                      height: SCREEN_HEIGHT * 0.12,
+                      width: '90%',
+                      alignSelf: 'center',
+                      marginBottom: 10,
+                      backgroundColor: '#fff',
+                      justifyContent: 'center',
+                      paddingLeft: 10,
+                      borderRadius: 5,
+                      elevation: 2,
+                      flexDirection: 'row',
                     }}>
-                    {item.nama_kantor}
-                  </Text>
-                  <Text style={{fontSize: 12}}>{item.telp}</Text>
-                </View>
-                <View style={{flex: 1, justifyContent: 'center'}}>
-                  <Icon
-                    name="send"
-                    type="FontAwesome"
-                    style={{
-                      color: '#327BF6',
-                    }}
-                  />
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      </Content>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                      <Thumbnail
+                        source={{
+                          uri: `https://ui-avatars.com/api/?size=256&name=${
+                            item.NamaKantor
+                          }`,
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        flex: 3,
+                        justifyContent: 'center',
+                        paddingLeft: 10,
+                      }}>
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          fontSize: 12,
+                          fontWeight: 'bold',
+                          color: '#273c75',
+                        }}>
+                        {item.NamaKantor}
+                      </Text>
+                      <Text style={{fontSize: 12}}>{item.NomerTelfon}</Text>
+                    </View>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                      <Icon
+                        name="send"
+                        type="FontAwesome"
+                        style={{
+                          color: '#327BF6',
+                        }}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </>
+        )}
+      </View>
       <FabToHome navigation={navigation} />
     </Container>
   );

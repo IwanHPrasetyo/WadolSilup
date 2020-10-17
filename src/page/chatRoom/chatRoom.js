@@ -29,6 +29,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const chatRoom = ({navigation}) => {
+  const [dataPolsek, setDataPolsek] = useState([]);
   let [msg, setMsg] = useState();
 
   let [pesan, setPesan] = useState([
@@ -73,6 +74,16 @@ const chatRoom = ({navigation}) => {
   ]);
   const [refresh, setRefresh] = useState(true);
 
+  useEffect(() => {
+    saveData();
+  }, []);
+
+  const saveData = async () => {
+    await setDataPolsek(navigation.getParam('data'));
+
+    console.log(navigation.getParam('data'));
+  };
+
   const sendMessage = async msg => {
     let data = {
       status: 'pengirim',
@@ -103,7 +114,11 @@ const chatRoom = ({navigation}) => {
               }}>
               <Thumbnail
                 small
-                source={require('../../asset/image/polisi7.jpg')}
+                source={{
+                  uri: `https://ui-avatars.com/api/?size=256&name=${
+                    dataPolsek.NamaKantor
+                  }`,
+                }}
               />
               <View
                 style={{
@@ -132,7 +147,7 @@ const chatRoom = ({navigation}) => {
                   fontSize: SCREEN_HEIGHT * 0.026,
                   alignSelf: 'flex-start',
                 }}>
-                Polda Malang
+                {dataPolsek.NamaKantor}
               </Text>
               <Text
                 numberOfLines={1}
@@ -142,7 +157,7 @@ const chatRoom = ({navigation}) => {
                   fontSize: SCREEN_HEIGHT * 0.022,
                   alignSelf: 'flex-start',
                 }}>
-                Mengetik ...
+                Online
               </Text>
             </Col>
           </Row>
