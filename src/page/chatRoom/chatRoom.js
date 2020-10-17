@@ -23,13 +23,16 @@ import {
   Input,
   Footer,
 } from 'native-base';
+import database from '@react-native-firebase/database';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {getDataLogin} from '../../helper/Asyncstorage';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const chatRoom = ({navigation}) => {
   const [dataPolsek, setDataPolsek] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
   let [msg, setMsg] = useState();
 
   let [pesan, setPesan] = useState([
@@ -76,6 +79,7 @@ const chatRoom = ({navigation}) => {
 
   useEffect(() => {
     saveData();
+    getUser();
   }, []);
 
   const saveData = async () => {
@@ -84,13 +88,21 @@ const chatRoom = ({navigation}) => {
     console.log(navigation.getParam('data'));
   };
 
+  const getUser = async () => {
+    setDataUser(await getDataLogin());
+  };
+
   const sendMessage = async msg => {
-    let data = {
-      status: 'pengirim',
-      pesan: msg,
-    };
-    await pesan.push(data);
-    setRefresh(!refresh);
+    console.log(dataUser[0].noIdentitas);
+    console.log(msg);
+
+    // database().ref(`Message/`${noIdentitas})
+    // let data = {
+    //   pegirim: noIdentitas,
+    //   pesan: msg,
+    // };
+    // await pesan.push(data);
+    // setRefresh(!refresh);
   };
 
   return (
