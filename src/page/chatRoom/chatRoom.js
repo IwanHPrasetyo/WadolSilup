@@ -22,7 +22,9 @@ import {
   Button,
   Input,
   Footer,
+  Toast,
 } from 'native-base';
+import moment from 'moment';
 import database from '@react-native-firebase/database';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {getDataLogin} from '../../helper/Asyncstorage';
@@ -93,16 +95,34 @@ const chatRoom = ({navigation}) => {
   };
 
   const sendMessage = async msg => {
-    console.log(dataUser[0].noIdentitas);
-    console.log(msg);
+    if (msg.length != 0) {
+      let data = {
+        pegirim: dataUser[0].noIdentitas,
+        pesan: msg,
+        penerima: dataPolsek.PolsekID,
+        waktu: moment().format('YYYY-MM-DD HH:mm:ss'),
+      };
 
-    // database().ref(`Message/`${noIdentitas})
-    // let data = {
-    //   pegirim: noIdentitas,
-    //   pesan: msg,
-    // };
-    // await pesan.push(data);
-    // setRefresh(!refresh);
+      database()
+        .ref(`Message/${dataUser[0].noIdentitas}`)
+        .set(data)
+        .then(() => {
+          Toast.show({
+            text: 'Pesan Terkirim',
+            type: 'success',
+            duration: 800,
+          });
+        });
+
+      // await pesan.push(data);
+      // setRefresh(!refresh);
+    } else {
+      Toast.show({
+        text: 'Masukan Pesan Anda',
+        type: 'warning',
+        duration: 800,
+      });
+    }
   };
 
   return (
