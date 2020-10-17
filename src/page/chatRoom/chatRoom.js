@@ -35,63 +35,36 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const chatRoom = ({navigation}) => {
   const [dataPolsek, setDataPolsek] = useState([]);
   const [dataUser, setDataUser] = useState([]);
-  let [msg, setMsg] = useState();
-
-  let [pesan, setPesan] = useState([
-    // {
-    //   status: 'pengirim',
-    //   pesan: 'Hallo Polres malang',
-    // },
-    // {
-    //   status: 'penerima',
-    //   pesan: 'Hallo Iwan, ada yang bisa kami bantu ?',
-    // },
-    // {
-    //   status: 'pengirim',
-    //   pesan: 'Saya mau tanya soal laporan saya',
-    // },
-    // {
-    //   status: 'pengirim',
-    //   pesan: 'Apakah sudah diproses ?',
-    // },
-    // {
-    //   status: 'penerima',
-    //   pesan:
-    //     'Untuk saat ini laporan dari bapak sudah kami proses dan sedang dalam penyelidikan',
-    // },
-    // {
-    //   status: 'pengirim',
-    //   pesan: 'Trimakasih banyak atas respon cepatnya',
-    // },
-    // {
-    //   status: 'penerima',
-    //   pesan:
-    //     'Untuk perkemabangan laporan selanjutnya akan kami informasikan secara berkala kepada anda',
-    // },
-    // {
-    //   status: 'pengirim',
-    //   pesan: 'Trimakasih banyak atas perhatianya',
-    // },
-    // {
-    //   status: 'penerima',
-    //   pesan: 'Sama - sama',
-    // },
-  ]);
+  const [dataPesan, setDataPesan] = useState([]);
+  const [msg, setMsg] = useState();
   const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
-    saveData();
     getUser();
-  }, []);
+    saveData();
+  }, [refresh]);
 
   const saveData = async () => {
     await setDataPolsek(navigation.getParam('data'));
-
-    console.log(navigation.getParam('data'));
   };
 
   const getUser = async () => {
-    setDataUser(await getDataLogin());
+    let data = await getDataLogin();
+    setDataUser(data);
+    getDataPesan(data);
+  };
+
+  const getDataPesan = async user => {
+    let data = [];
+    await database()
+      .ref(`Message/${user[0].noIdentitas}/`)
+      .once('value')
+      .then(async item => {
+        await Object.keys(item.val()).map(key => {
+          data.push(item.val()[key]);
+        });
+        setDataPesan(data.reverse());
+      });
   };
 
   const sendMessage = async msg => {
@@ -104,18 +77,20 @@ const chatRoom = ({navigation}) => {
       };
 
       database()
-        .ref(`Message/${dataUser[0].noIdentitas}`)
+        .ref(`Message/${dataUser[0].noIdentitas}/${Date.now()}`)
         .set(data)
         .then(() => {
-          Toast.show({
-            text: 'Pesan Terkirim',
-            type: 'success',
-            duration: 800,
-          });
+          database()
+            .ref(`Message/${dataPolsek.PolsekID}/${Date.now()}`)
+            .set(data)
+            .then(() => {
+              Toast.show({
+                text: 'Pesan Terkirim',
+                type: 'success',
+                duration: 800,
+              });
+            });
         });
-
-      // await pesan.push(data);
-      // setRefresh(!refresh);
     } else {
       Toast.show({
         text: 'Masukan Pesan Anda',
@@ -123,6 +98,7 @@ const chatRoom = ({navigation}) => {
         duration: 800,
       });
     }
+    setRefresh(!refresh);
   };
 
   return (
@@ -198,92 +174,89 @@ const chatRoom = ({navigation}) => {
           <Icon style={{color: '#ffffff'}} name="phone" type="FontAwesome" />
         </Right>
       </Header>
-      <Content>
-        <SafeAreaView style={Styles.container}>
-          <View style={{paddingBottom: SCREEN_HEIGHT * 0.02}}>
-            <ScrollView>
-              <FlatList
-                data={pesan}
-                renderItem={({item}) => (
-                  <>
-                    {item.status == 'pengirim' ? (
-                      <View style={Styles.viewPengirim}>
-                        <Text style={{color: '#ffffff', fontWeight: 'bold'}}>
-                          {item.pesan}
-                        </Text>
-                      </View>
-                    ) : (
-                      <View
-                        style={{
-                          alignSelf: 'flex-end',
-                          backgroundColor: '#ffffff',
-                          elevation: 5,
-                          width: SCREEN_WIDTH * 0.5,
-                          marginTop: '2%',
-                          marginBottom: '2%',
-                          paddingHorizontal: '4%',
-                          paddingVertical: '3%',
-                          borderBottomLeftRadius: 20,
-                          borderTopRightRadius: 5,
-                          borderTopLeftRadius: 20,
-                          borderBottomRightRadius: 20,
-                          marginRight: '4%',
-                        }}>
-                        <Text style={{color: '#273c75', fontWeight: 'bold'}}>
-                          {item.pesan}
-                        </Text>
-                      </View>
-                    )}
-                  </>
+      <View style={Styles.container}>
+        <ScrollView>
+          <FlatList
+            data={dataPesan}
+            renderItem={({item}) => (
+              <>
+                {item.pegirim == dataUser[0].noIdentitas ? (
+                  <View style={Styles.viewPengirim}>
+                    <Text style={{color: '#ffffff', fontWeight: 'bold'}}>
+                      {item.pesan}
+                    </Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      alignSelf: 'flex-end',
+                      backgroundColor: '#ffffff',
+                      elevation: 5,
+                      width: SCREEN_WIDTH * 0.5,
+                      marginTop: '2%',
+                      marginBottom: '2%',
+                      paddingHorizontal: '4%',
+                      paddingVertical: '3%',
+                      borderBottomLeftRadius: 20,
+                      borderTopRightRadius: 5,
+                      borderTopLeftRadius: 20,
+                      borderBottomRightRadius: 20,
+                      marginRight: '4%',
+                    }}>
+                    <Text style={{color: '#273c75', fontWeight: 'bold'}}>
+                      {item.pesan}
+                    </Text>
+                  </View>
                 )}
-              />
-            </ScrollView>
-          </View>
-        </SafeAreaView>
-      </Content>
-      <Footer style={{backgroundColor: 'transparent'}}>
-        <Row
-          style={{
-            paddingVertical: '2%',
-            paddingHorizontal: '2%',
-            backgroundColor: '#327BF6',
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-          }}>
-          <Col style={{flex: 4, height: '80%'}}>
-            <Input
-              onChangeText={data => setMsg(data)}
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: 5,
-                marginLeft: '5%',
-              }}
-              placeholder="Pesan"
-            />
-          </Col>
-          <Col
+              </>
+            )}
+          />
+        </ScrollView>
+      </View>
+      <Row
+        style={{
+          flex: 1,
+          paddingVertical: '2%',
+          paddingHorizontal: '2%',
+          backgroundColor: '#327BF6',
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+        }}>
+        <Col style={{flex: 4, height: '80%'}}>
+          <Input
+            onChangeText={data => setMsg(data)}
             style={{
-              flex: 1,
-              height: '70%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity onPress={() => sendMessage(msg)}>
-              <Icon
-                style={{color: '#ffffff'}}
-                name="rocket"
-                type="FontAwesome"
-              />
-            </TouchableOpacity>
-          </Col>
-        </Row>
-      </Footer>
+              backgroundColor: '#ffffff',
+              height: '80%',
+              borderRadius: 5,
+              marginLeft: '5%',
+            }}
+            placeholder="Pesan"
+          />
+        </Col>
+        <Col
+          style={{
+            flex: 1,
+            height: '70%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Icon
+            onPress={() => {
+              sendMessage(msg);
+            }}
+            style={{color: '#ffffff'}}
+            name="rocket"
+            type="FontAwesome"
+          />
+        </Col>
+      </Row>
     </Container>
   );
 };
 
 const Styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 8},
   header: {
     height: SCREEN_HEIGHT * 0.1,
     paddingTop: '1%',

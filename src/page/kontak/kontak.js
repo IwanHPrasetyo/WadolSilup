@@ -67,14 +67,15 @@ const kontak = ({navigation}) => {
   }, []);
 
   const getKontak = async () => {
-    await database()
+    database()
       .ref(`/DataPolsek/`)
       .once('value')
-      .then(async item => {
+      .then(item => {
         const data = item.val().filter(item => {
           return item != null;
         });
-        await setDataKontak(data);
+        console.log(item.val());
+        setDataKontak(data);
       });
   };
 
