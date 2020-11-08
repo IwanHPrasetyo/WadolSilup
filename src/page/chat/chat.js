@@ -80,76 +80,6 @@ const dataKantorPolisi = [
     image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Sukun',
     // image: require('../../asset/image/polisi7.jpg'),
   },
-
-  {
-    pengirim: 'Polsekta Sukun',
-    pesan: 'Kasus dalam penanganan',
-    waktu: '10:18',
-    pesanMasuk: 0,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Sukun',
-    // image: require('../../asset/image/polisi7.jpg'),
-  },
-  {
-    pengirim: 'Polsekta Sukun',
-    pesan: 'Kasus dalam penanganan',
-    waktu: '10:18',
-    pesanMasuk: 0,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Sukun',
-    // image: require('../../asset/image/polisi7.jpg'),
-  },
-  {
-    pengirim: 'Polsekta Sukun',
-    pesan: 'Kasus dalam penanganan',
-    waktu: '10:18',
-    pesanMasuk: 0,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Sukun',
-    // image: require('../../asset/image/polisi7.jpg'),
-  },
-];
-
-const dataKontak = [
-  {
-    nama_kantor: 'Polresta Malang',
-    alamat: 'Jl. Slamet Riyadi Malang',
-    telp: '(0341) 366444',
-    latitude: -7.9716824,
-    longitude: 112.6305915,
-  },
-  {
-    nama_kantor: 'Polsekta Blimbing',
-    alamat: 'Jl. Raden Intan No.6 Malang',
-    telp: '(0341) 491304',
-    latitude: -7.9299114,
-    longitude: 112.6483513,
-  },
-  {
-    nama_kantor: 'Polsekta Kedungkandang',
-    alamat: 'Jl. Ki Ageng Gribig 96 Malang',
-    telp: '(0341) 325057',
-    latitude: -7.9934269,
-    longitude: 112.6460037,
-  },
-  {
-    nama_kantor: 'Polsekta Klojen',
-    alamat: 'Jl. Kelut 11 Malang',
-    telp: '(0341) 361667',
-    latitude: -7.9808747,
-    longitude: 112.6233234,
-  },
-  {
-    nama_kantor: 'Polsekta Lowokwaru',
-    alamat: 'Jl. Lowokwaru-Malang',
-    telp: '(0341) 472392',
-    latitude: -7.9413999,
-    longitude: 112.6071599,
-  },
-  {
-    nama_kantor: 'Polsekta Sukun',
-    alamat: 'Jl. Kol Sugiono No.5 Malang',
-    telp: '(0341) 368638',
-    latitude: -8.0042733,
-    longitude: 112.6163261,
-  },
 ];
 
 const chat = ({navigation}) => {
@@ -157,7 +87,7 @@ const chat = ({navigation}) => {
 
   return (
     <Container>
-      <View style={{backgroundColor: '#327BF6'}}>
+      <View style={{flex: 1, backgroundColor: '#327BF6'}}>
         <FlatList
           data={dataKantorPolisi}
           initialNumToRender={7}
