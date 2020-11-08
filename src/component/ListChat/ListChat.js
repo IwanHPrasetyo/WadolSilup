@@ -24,10 +24,10 @@ const ListChat = ({item, index, navigation}) => {
             }}>
             <Thumbnail
               source={{
-                uri: item.image,
+                uri: `https://ui-avatars.com/api/?size=256&name=${item}`,
               }}
             />
-            {item.pesanMasuk != 0 ? (
+            {/* {item.pesanMasuk != 0 ? (
               <View
                 style={{
                   position: 'absolute',
@@ -44,7 +44,7 @@ const ListChat = ({item, index, navigation}) => {
                   {item.pesanMasuk}
                 </Text>
               </View>
-            ) : null}
+            ) : null} */}
           </Col>
           <Col
             style={{
@@ -54,11 +54,11 @@ const ListChat = ({item, index, navigation}) => {
             <Text
               numberOfLines={1}
               style={{fontWeight: 'bold', color: '#273c75'}}>
-              {item.pengirim}
+              {item}
             </Text>
-            <Text numberOfLines={1} style={{color: '#afafaf'}}>
+            {/* <Text numberOfLines={1} style={{color: '#afafaf'}}>
               {item.pesan}
-            </Text>
+            </Text> */}
           </Col>
           <Col
             style={{
@@ -67,7 +67,8 @@ const ListChat = ({item, index, navigation}) => {
               alignItems: 'flex-end',
             }}>
             <Text style={{color: '#afafaf', fontWeight: 'bold'}}>
-              {item.waktu}
+              {/* {item.waktu} */}
+              20:20
             </Text>
           </Col>
         </Row>

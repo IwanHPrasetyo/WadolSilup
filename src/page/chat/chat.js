@@ -1,95 +1,55 @@
 import React, {useState, useEffect} from 'react';
-import {Dimensions, StatusBar, SafeAreaView, Modal} from 'react-native';
-import {
-  Content,
-  Header,
-  View,
-  Text,
-  Container,
-  Icon,
-  Left,
-  Body,
-  Row,
-  Col,
-  Grid,
-  Badge,
-  Thumbnail,
-  Fab,
-  Button,
-  Right,
-} from 'native-base';
-import {
-  FlatList,
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import {Alert} from 'react-native';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
+import {View, Container} from 'native-base';
 import FabHome from '../../component/fabToHome';
+import {firebase} from '../../helper/FirebaseSync';
+import {FlatList} from 'react-native-gesture-handler';
 import ListChat from '../../component/ListChat/ListChat';
+import {getDataLogin} from '../../helper/Asyncstorage';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const dataKantorPolisi = [
-  {
-    pengirim: 'Polresta Malang',
-    pesan: 'Kasus dalam penanganan',
-    waktu: '20:00',
-    pesanMasuk: 4,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polresta Malang',
-    // image: require('../../asset/image/polisi2.jpeg'),
-  },
-  {
-    pengirim: 'Polsekta Blimbing',
-    pesan: 'Kasus Selesai',
-    waktu: '14:28',
-    pesanMasuk: 2,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Blimbing',
-    // image: require('../../asset/image/polisi3.jpg'),
-  },
-  {
-    pengirim: 'Polsekta Kedungkandang',
-    pesan: 'Segera meluncur ke TKP',
-    waktu: '08:10',
-    pesanMasuk: 1,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Kedungkandang',
-    // image: require('../../asset/image/polisi4.jpg'),
-  },
-  {
-    pengirim: 'Polsekta Klojen',
-    pesan: 'Laporan akan segera kami proses',
-    waktu: '08:15',
-    pesanMasuk: 0,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Klojen',
-    // image: require('../../asset/image/polisi5.jpg'),
-  },
-  {
-    pengirim: 'Polsekta Lowokwaru',
-    pesan: 'Trimakasih atas laporan anda',
-    waktu: '03:00',
-    pesanMasuk: 2,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Lowokwaru',
-    // image: require('../../asset/image/polisi6.jpg'),
-  },
-  {
-    pengirim: 'Polsekta Sukun',
-    pesan: 'Kasus dalam penanganan',
-    waktu: '10:18',
-    pesanMasuk: 0,
-    image: 'https://ui-avatars.com/api/?size=256&name=Polsekta Sukun',
-    // image: require('../../asset/image/polisi7.jpg'),
-  },
-];
-
 const chat = ({navigation}) => {
   const [active, setActive] = useState(false);
+  const [kantorPenerima, setKantorPenerima] = useState([]);
+
+  useEffect(() => {
+    getPesan();
+  }, []);
+
+  const getPesan = async () => {
+    let data = await getDataLogin();
+    let conn = firebase.database();
+    let message = conn.ref(`Message/${data[0].noIdentitas}/`);
+
+    message.on('value', dataPesan => {
+      let idUser = [];
+      let idUserFix = [];
+      let pesan = [];
+      let dataPenerima = [];
+      dataPesan.forEach(item => {
+        item.val().pegirim != data[0].noIdentitas
+          ? (idUser.push(parseInt(item.val().pegirim)),
+            pesan.push(item.val()),
+            dataPenerima.push(item.val().namaPolsek))
+          : item.val().penerima != data[0].noIdentitas
+          ? (idUser.push(parseInt(item.val().penerima)),
+            pesan.push(item.val()),
+            dataPenerima.push(item.val().namaPolsek))
+          : null;
+      });
+      const unique = [...new Set(idUser)];
+      const namaUnique = [...new Set(dataPenerima)];
+      setKantorPenerima(namaUnique);
+    });
+  };
 
   return (
     <Container>
       <View style={{flex: 1, backgroundColor: '#327BF6'}}>
         <FlatList
-          data={dataKantorPolisi}
+          data={kantorPenerima}
           initialNumToRender={7}
           style={{marginTop: 16, marginBottom: 16, zIndex: 1}}
           renderItem={({item, index}) => (

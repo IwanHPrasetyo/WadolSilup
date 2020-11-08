@@ -47,10 +47,11 @@ const chatRoom = ({navigation}) => {
 
     let dataPolsek = navigation.getParam('data');
 
+    console.log(dataPolsek);
+
     await messagedata.on('value', data => {
       let result = [];
       data.forEach(item => {
-        console.log(item.val().penerima);
         item.val().penerima == dataPolsek.PolsekID ||
         item.val().pegirim == dataPolsek.PolsekID
           ? result.push(item.val())
@@ -64,8 +65,10 @@ const chatRoom = ({navigation}) => {
     if (msg.length != 0) {
       let data = {
         pegirim: dataUser[0].noIdentitas,
+        namaPelapor: dataUser[0].nama,
         pesan: msg,
         penerima: dataPolsek.PolsekID,
+        namaPolsek: dataPolsek.NamaKantor,
         waktu: moment().format('YYYY-MM-DD HH:mm:ss'),
       };
 
