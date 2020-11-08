@@ -16,8 +16,7 @@ import {
   Toast,
 } from 'native-base';
 import moment from 'moment';
-// import database from '@react-native-firebase/database';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import {getDataLogin} from '../../helper/Asyncstorage';
 import {Keyboard} from 'react-native';
 import {firebase} from '../../helper/FirebaseSync';
@@ -34,13 +33,9 @@ const chatRoom = ({navigation}) => {
   const [msg, setMsg] = useState();
 
   useEffect(() => {
+    setDataPolsek(navigation.getParam('data'));
     getUser();
-    saveData();
   }, []);
-
-  const saveData = async () => {
-    await setDataPolsek(navigation.getParam('data'));
-  };
 
   const getUser = async () => {
     let data = await getDataLogin();
@@ -52,10 +47,17 @@ const chatRoom = ({navigation}) => {
     let conn = firebase.database();
     let messagedata = conn.ref(`Message/${user[0].noIdentitas}/`);
 
+    let dataPolsek = navigation.getParam('data');
+
     await messagedata.on('value', data => {
       let result = [];
       data.forEach(item => {
-        result.push(item.val());
+        // console.log('dataPolsek' + dataPolsek);
+        console.log(item.val().penerima);
+        item.val().penerima == dataPolsek.PolsekID ||
+        item.val().pengirim == dataPolsek.PolsekID
+          ? result.push(item.val())
+          : null;
       });
       setDataPesan(result);
     });
@@ -185,7 +187,7 @@ const chatRoom = ({navigation}) => {
           placeholder="Pesan"
           style={{
             flex: 5,
-            height: 50,
+            height: 40,
             marginLeft: 10,
             marginRight: 10,
             borderRadius: 5,
@@ -193,20 +195,21 @@ const chatRoom = ({navigation}) => {
           }}
           onChangeText={data => setMsg(data)}
         />
-
-        <TouchableOpacity
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            marginLeft: 5,
-          }}
+        <Icon
           onPress={() => {
             sendMessage(msg);
             Keyboard.dismiss();
             setMsg('');
-          }}>
-          <Icon style={{color: '#ffffff'}} name="rocket" type="FontAwesome" />
-        </TouchableOpacity>
+          }}
+          style={{
+            flex: 1,
+            alignSelf: 'center',
+            marginLeft: 5,
+            color: '#ffffff',
+          }}
+          name="rocket"
+          type="FontAwesome"
+        />
       </View>
     </Container>
   );
