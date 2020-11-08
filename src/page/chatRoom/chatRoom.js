@@ -52,7 +52,7 @@ const chatRoom = ({navigation}) => {
       data.forEach(item => {
         console.log(item.val().penerima);
         item.val().penerima == dataPolsek.PolsekID ||
-        item.val().pengirim == dataPolsek.PolsekID
+        item.val().pegirim == dataPolsek.PolsekID
           ? result.push(item.val())
           : null;
       });
