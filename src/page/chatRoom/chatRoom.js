@@ -17,11 +17,12 @@ import {
 } from 'native-base';
 import moment from 'moment';
 // import database from '@react-native-firebase/database';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {getDataLogin} from '../../helper/Asyncstorage';
 import {Keyboard} from 'react-native';
 import {firebase} from '../../helper/FirebaseSync';
 import ListChatRoom from '../../component/ListChatRoom/ListChatRoom';
+import {TextInput} from 'react-native';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -31,9 +32,6 @@ const chatRoom = ({navigation}) => {
   const [dataUser, setDataUser] = useState([]);
   const [dataPesan, setDataPesan] = useState([]);
   const [msg, setMsg] = useState();
-  const [refresh, setRefresh] = useState(true);
-
-  console.ignoredYellowBox = [1000000];
 
   useEffect(() => {
     getUser();
@@ -51,27 +49,16 @@ const chatRoom = ({navigation}) => {
   };
 
   const getDataPesan = async user => {
-    let result = [];
     let conn = firebase.database();
     let messagedata = conn.ref(`Message/${user[0].noIdentitas}/`);
 
     await messagedata.on('value', data => {
+      let result = [];
       data.forEach(item => {
         result.push(item.val());
       });
+      setDataPesan(result);
     });
-
-    setDataPesan(result);
-
-    // await database()
-    //   .ref(`Message/${user[0].noIdentitas}/`)
-    //   .once('value')
-    //   .then(async item => {
-    //     await Object.keys(item.val()).map(key => {
-    //       data.push(item.val()[key]);
-    //     });
-    //     setDataPesan(data.reverse());
-    //   });
   };
 
   const sendMessage = async msg => {
@@ -92,37 +79,11 @@ const chatRoom = ({navigation}) => {
       );
 
       messagePengirim.set(data).then(() => {
-        messagePenerima.set(data).then(() => {
-          Toast.show({
-            text: 'Pesan Terkirim',
-            type: 'success',
-            duration: 800,
-          });
-        });
+        messagePenerima.set(data).then(() => {});
       });
-      // database()
-      //   .ref(`Message/${dataUser[0].noIdentitas}/${Date.now()}`)
-      //   .set(data)
-      //   .then(() => {
-      //     database()
-      //       .ref(`Message/${dataPolsek.PolsekID}/${Date.now()}`)
-      //       .set(data)
-      //       .then(() => {
-      //         Toast.show({
-      //           text: 'Pesan Terkirim',
-      //           type: 'success',
-      //           duration: 800,
-      //         });
-      //       });
-      //   });
     } else {
-      Toast.show({
-        text: 'Masukan Pesan Anda',
-        type: 'warning',
-        duration: 800,
-      });
+      console.log('gagal');
     }
-    // setRefresh(!refresh);
   };
 
   return (
@@ -216,39 +177,36 @@ const chatRoom = ({navigation}) => {
         style={{
           flexDirection: 'row',
           backgroundColor: '#327BF6',
-          paddingTop: 20,
-          paddingBottom: 20,
+          paddingTop: 10,
+          paddingBottom: 10,
         }}>
-        <Input
-          // value={msg}
+        <TextInput
+          value={msg}
+          placeholder="Pesan"
           style={{
             flex: 5,
-            backgroundColor: '#ffffff',
-            height: '80%',
+            height: 50,
             marginLeft: 10,
             marginRight: 10,
-            height: 40,
             borderRadius: 5,
+            backgroundColor: '#fff',
           }}
           onChangeText={data => setMsg(data)}
-          placeholder="Pesan"
         />
 
-        <Icon
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            marginLeft: 5,
+          }}
           onPress={() => {
             sendMessage(msg);
             Keyboard.dismiss();
             setMsg('');
-          }}
-          style={{
-            flex: 1,
-            color: '#ffffff',
-            alignSelf: 'center',
-            marginLeft: 5,
-          }}
-          name="rocket"
-          type="FontAwesome"
-        />
+          }}>
+          <Icon style={{color: '#ffffff'}} name="rocket" type="FontAwesome" />
+        </TouchableOpacity>
       </View>
     </Container>
   );
