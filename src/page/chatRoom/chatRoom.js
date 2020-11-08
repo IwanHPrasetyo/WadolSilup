@@ -1,15 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  StatusBar,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, Dimensions, StatusBar} from 'react-native';
 import {
   Text,
   Container,
-  Content,
   Header,
   Left,
   Icon,
@@ -19,15 +12,16 @@ import {
   Row,
   Col,
   View,
-  Button,
   Input,
-  Footer,
   Toast,
 } from 'native-base';
 import moment from 'moment';
-import database from '@react-native-firebase/database';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+// import database from '@react-native-firebase/database';
+import {FlatList} from 'react-native-gesture-handler';
 import {getDataLogin} from '../../helper/Asyncstorage';
+import {Keyboard} from 'react-native';
+import {firebase} from '../../helper/FirebaseSync';
+import ListChatRoom from '../../component/ListChatRoom/ListChatRoom';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -39,10 +33,12 @@ const chatRoom = ({navigation}) => {
   const [msg, setMsg] = useState();
   const [refresh, setRefresh] = useState(true);
 
+  console.ignoredYellowBox = [1000000];
+
   useEffect(() => {
     getUser();
     saveData();
-  }, [refresh]);
+  }, []);
 
   const saveData = async () => {
     await setDataPolsek(navigation.getParam('data'));
@@ -55,16 +51,27 @@ const chatRoom = ({navigation}) => {
   };
 
   const getDataPesan = async user => {
-    let data = [];
-    await database()
-      .ref(`Message/${user[0].noIdentitas}/`)
-      .once('value')
-      .then(async item => {
-        await Object.keys(item.val()).map(key => {
-          data.push(item.val()[key]);
-        });
-        setDataPesan(data.reverse());
+    let result = [];
+    let conn = firebase.database();
+    let messagedata = conn.ref(`Message/${user[0].noIdentitas}/`);
+
+    await messagedata.on('value', data => {
+      data.forEach(item => {
+        result.push(item.val());
       });
+    });
+
+    setDataPesan(result);
+
+    // await database()
+    //   .ref(`Message/${user[0].noIdentitas}/`)
+    //   .once('value')
+    //   .then(async item => {
+    //     await Object.keys(item.val()).map(key => {
+    //       data.push(item.val()[key]);
+    //     });
+    //     setDataPesan(data.reverse());
+    //   });
   };
 
   const sendMessage = async msg => {
@@ -76,21 +83,38 @@ const chatRoom = ({navigation}) => {
         waktu: moment().format('YYYY-MM-DD HH:mm:ss'),
       };
 
-      database()
-        .ref(`Message/${dataUser[0].noIdentitas}/${Date.now()}`)
-        .set(data)
-        .then(() => {
-          database()
-            .ref(`Message/${dataPolsek.PolsekID}/${Date.now()}`)
-            .set(data)
-            .then(() => {
-              Toast.show({
-                text: 'Pesan Terkirim',
-                type: 'success',
-                duration: 800,
-              });
-            });
+      let conn = firebase.database();
+      let messagePengirim = conn.ref(
+        `Message/${dataUser[0].noIdentitas}/${Date.now()}`,
+      );
+      let messagePenerima = conn.ref(
+        `Message/${dataPolsek.PolsekID}/${Date.now()}`,
+      );
+
+      messagePengirim.set(data).then(() => {
+        messagePenerima.set(data).then(() => {
+          Toast.show({
+            text: 'Pesan Terkirim',
+            type: 'success',
+            duration: 800,
+          });
         });
+      });
+      // database()
+      //   .ref(`Message/${dataUser[0].noIdentitas}/${Date.now()}`)
+      //   .set(data)
+      //   .then(() => {
+      //     database()
+      //       .ref(`Message/${dataPolsek.PolsekID}/${Date.now()}`)
+      //       .set(data)
+      //       .then(() => {
+      //         Toast.show({
+      //           text: 'Pesan Terkirim',
+      //           type: 'success',
+      //           duration: 800,
+      //         });
+      //       });
+      //   });
     } else {
       Toast.show({
         text: 'Masukan Pesan Anda',
@@ -98,7 +122,7 @@ const chatRoom = ({navigation}) => {
         duration: 800,
       });
     }
-    setRefresh(!refresh);
+    // setRefresh(!refresh);
   };
 
   return (
@@ -175,55 +199,36 @@ const chatRoom = ({navigation}) => {
         </Right>
       </Header>
       <View style={Styles.container}>
-        <ScrollView>
-          <FlatList
-            data={dataPesan}
-            renderItem={({item}) => (
-              <>
-                {item.pegirim == dataUser[0].noIdentitas ? (
-                  <View style={Styles.viewPengirim}>
-                    <Text style={{color: '#ffffff', fontWeight: 'bold'}}>
-                      {item.pesan}
-                    </Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      alignSelf: 'flex-end',
-                      backgroundColor: '#ffffff',
-                      elevation: 5,
-                      width: SCREEN_WIDTH * 0.5,
-                      marginTop: '2%',
-                      marginBottom: '2%',
-                      paddingHorizontal: '4%',
-                      paddingVertical: '3%',
-                      borderBottomLeftRadius: 20,
-                      borderTopRightRadius: 5,
-                      borderTopLeftRadius: 20,
-                      borderBottomRightRadius: 20,
-                      marginRight: '4%',
-                    }}>
-                    <Text style={{color: '#273c75', fontWeight: 'bold'}}>
-                      {item.pesan}
-                    </Text>
-                  </View>
-                )}
-              </>
-            )}
-          />
-        </ScrollView>
+        <FlatList
+          data={dataPesan}
+          keyExtractor={(_, index) => 'key' + index}
+          renderItem={({item, index}) => (
+            <ListChatRoom
+              item={item}
+              index={index}
+              Styles={Styles}
+              dataUser={dataUser}
+            />
+          )}
+        />
       </View>
-      <View style={{flexDirection: 'row', backgroundColor: '#327BF6'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: '#327BF6',
+          paddingTop: 20,
+          paddingBottom: 20,
+        }}>
         <Input
+          // value={msg}
           style={{
             flex: 5,
             backgroundColor: '#ffffff',
             height: '80%',
             marginLeft: 10,
             marginRight: 10,
-            alignSelf: 'center',
+            height: 40,
             borderRadius: 5,
-            backgroundColor: 'red',
           }}
           onChangeText={data => setMsg(data)}
           placeholder="Pesan"
@@ -232,8 +237,15 @@ const chatRoom = ({navigation}) => {
         <Icon
           onPress={() => {
             sendMessage(msg);
+            Keyboard.dismiss();
+            setMsg('');
           }}
-          style={{flex: 1, color: '#ffffff', alignSelf: 'center'}}
+          style={{
+            flex: 1,
+            color: '#ffffff',
+            alignSelf: 'center',
+            marginLeft: 5,
+          }}
           name="rocket"
           type="FontAwesome"
         />

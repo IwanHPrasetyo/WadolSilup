@@ -39,8 +39,8 @@ const TabNavigation = createMaterialBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <View>
             <Icon
-              style={{color: tintColor}}
-              name="th-large"
+              style={{color: tintColor, fontSize: 24}}
+              name="codepen"
               type="FontAwesome"
             />
           </View>

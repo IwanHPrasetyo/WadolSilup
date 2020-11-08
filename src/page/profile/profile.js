@@ -22,7 +22,7 @@ import {getDataLogin} from '../../helper/Asyncstorage';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-profile = ({navigation}) => {
+const profile = ({navigation}) => {
   let [dataUser, setDataUser] = useState([]);
   useEffect(() => {
     getUser();

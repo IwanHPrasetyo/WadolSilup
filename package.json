@@ -16,6 +16,7 @@
     "@react-native-firebase/app": "^8.2.0",
     "@react-native-firebase/database": "^7.3.2",
     "@react-navigation/material-bottom-tabs": "^5.1.14",
+    "firebase": "^8.0.1",
     "moment": "^2.27.0",
     "native-base": "^2.13.8",
     "react": "16.9.0",

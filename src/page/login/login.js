@@ -12,16 +12,14 @@ import {
   Col,
   Button,
   Grid,
-  Label,
   Icon,
   Body,
-  Right,
   Left,
   Toast,
 } from 'native-base';
-import {Dimensions, Image, StatusBar, ToastAndroid} from 'react-native';
-import Styles from '../../style/style';
-import database from '@react-native-firebase/database';
+import {Dimensions, Image, StatusBar} from 'react-native';
+// import database from '@react-native-firebase/database';
+import {firebase} from '../../helper/FirebaseSync';
 import {loginData, getDataLogin} from '../../helper/Asyncstorage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -48,12 +46,14 @@ const login = ({navigation}) => {
 
   const Login = async () => {
     const data = [];
-    await database()
-      .ref(`/DataPolapor/${id}`)
-      .once('value')
-      .then(snapshot => {
-        data.push(snapshot.val());
-      });
+
+    let conn = firebase.database();
+    let fireDataLaporan = conn.ref(`/DataPolapor/${id}`).once('value');
+
+    await fireDataLaporan.then(snapshot => {
+      data.push(snapshot.val());
+    });
+
     let uid = data[0] != null;
     let passauth = uid ? data[0].password == pass : null;
 

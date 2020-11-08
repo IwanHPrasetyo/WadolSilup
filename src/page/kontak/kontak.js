@@ -2,8 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {Container, Content, Text, Thumbnail, Icon, Spinner} from 'native-base';
 import {FlatList, View, Dimensions} from 'react-native';
 import FabToHome from '../../component/fabToHome';
-import database from '@react-native-firebase/database';
+// import database from '@react-native-firebase/database';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {firebase} from '../../helper/FirebaseSync';
+import ListKontak from '../../component/ListKontak/ListKontak';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -67,14 +69,13 @@ const kontak = ({navigation}) => {
   }, []);
 
   const getKontak = async () => {
-    database()
-      .ref(`/DataPolsek/`)
+    let db = firebase.database();
+    db.ref(`/DataPolsek/`)
       .once('value')
       .then(item => {
         const data = item.val().filter(item => {
           return item != null;
         });
-        console.log(item.val());
         setDataKontak(data);
       });
   };
@@ -92,61 +93,10 @@ const kontak = ({navigation}) => {
             <FlatList
               data={dataKontak}
               style={{marginTop: 20, marginBottom: 20, zIndex: 1}}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('ChatRoomScreen', {data: item})
-                  }>
-                  <View
-                    style={{
-                      height: SCREEN_HEIGHT * 0.12,
-                      width: '90%',
-                      alignSelf: 'center',
-                      marginBottom: 10,
-                      backgroundColor: '#fff',
-                      justifyContent: 'center',
-                      paddingLeft: 10,
-                      borderRadius: 5,
-                      elevation: 2,
-                      flexDirection: 'row',
-                    }}>
-                    <View style={{flex: 1, justifyContent: 'center'}}>
-                      <Thumbnail
-                        source={{
-                          uri: `https://ui-avatars.com/api/?size=256&name=${
-                            item.NamaKantor
-                          }`,
-                        }}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        flex: 3,
-                        justifyContent: 'center',
-                        paddingLeft: 10,
-                      }}>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          fontSize: 12,
-                          fontWeight: 'bold',
-                          color: '#273c75',
-                        }}>
-                        {item.NamaKantor}
-                      </Text>
-                      <Text style={{fontSize: 12}}>{item.NomerTelfon}</Text>
-                    </View>
-                    <View style={{flex: 1, justifyContent: 'center'}}>
-                      <Icon
-                        name="send"
-                        type="FontAwesome"
-                        style={{
-                          color: '#327BF6',
-                        }}
-                      />
-                    </View>
-                  </View>
-                </TouchableOpacity>
+              keyExtractor={(item, index) => index.toString()}
+              initialNumToRender={7}
+              renderItem={({item, index}) => (
+                <ListKontak navigation={navigation} item={item} index={index} />
               )}
             />
           </>

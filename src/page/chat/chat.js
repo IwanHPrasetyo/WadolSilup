@@ -26,6 +26,7 @@ import {
 import {Alert} from 'react-native';
 import {StyleSheet} from 'react-native';
 import FabHome from '../../component/fabToHome';
+import ListChat from '../../component/ListChat/ListChat';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -156,147 +157,17 @@ const chat = ({navigation}) => {
 
   return (
     <Container>
-      <Content style={{backgroundColor: '#327BF6'}}>
+      <View style={{backgroundColor: '#327BF6'}}>
         <FlatList
           data={dataKantorPolisi}
+          initialNumToRender={7}
           style={{marginTop: 16, marginBottom: 16, zIndex: 1}}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ChatRoomScreen')}>
-              <Grid
-                style={{
-                  backgroundColor: '#ffffff',
-                  marginHorizontal: '2%',
-                  marginVertical: '1%',
-                  borderRadius: 10,
-                  height: SCREEN_HEIGHT * 0.12,
-                  paddingHorizontal: '4%',
-                }}>
-                <Row>
-                  <Col
-                    style={{
-                      flex: 1.5,
-                      justifyContent: 'center',
-                    }}>
-                    <Thumbnail
-                      source={{
-                        uri: item.image,
-                      }}
-                    />
-                    {item.pesanMasuk != 0 ? (
-                      <View
-                        style={{
-                          position: 'absolute',
-                          backgroundColor: '#f9ca24',
-                          paddingHorizontal: '10%',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          borderRadius: 12,
-                          top: '6%',
-                          left: '45%',
-                          paddingVertical: '4%',
-                        }}>
-                        <Text style={{fontWeight: 'bold', color: '#ffffff'}}>
-                          {item.pesanMasuk}
-                        </Text>
-                      </View>
-                    ) : null}
-                  </Col>
-                  <Col
-                    style={{
-                      flex: 3.5,
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      numberOfLines={1}
-                      style={{fontWeight: 'bold', color: '#273c75'}}>
-                      {item.pengirim}
-                    </Text>
-                    <Text numberOfLines={1} style={{color: '#afafaf'}}>
-                      {item.pesan}
-                    </Text>
-                  </Col>
-                  <Col
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                    }}>
-                    <Text style={{color: '#afafaf', fontWeight: 'bold'}}>
-                      {item.waktu}
-                    </Text>
-                  </Col>
-                </Row>
-              </Grid>
-            </TouchableOpacity>
+          renderItem={({item, index}) => (
+            <ListChat item={item} navigation={navigation} index={index} />
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={active}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <View
-                style={{
-                  position: 'absolute',
-                  top: -20,
-                  right: -5,
-                  height: 40,
-                  width: 40,
-                  zIndex: 2,
-                  backgroundColor: '#afafaf',
-                  borderRadius: 80,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Icon
-                  onPress={() => setActive(false)}
-                  name="close"
-                  type="FontAwesome"
-                  style={{
-                    color: '#ffffff',
-                    fontSize: SCREEN_WIDTH * 0.1,
-                  }}
-                />
-              </View>
-              <FlatList
-                data={dataKontak}
-                style={{marginTop: 20, marginBottom: 20, zIndex: 1}}
-                renderItem={({item}) => (
-                  <View
-                    style={{
-                      height: SCREEN_HEIGHT * 0.1,
-                      width: SCREEN_WIDTH * 0.8,
-                      marginBottom: 10,
-                      marginHorizontal: 10,
-                      backgroundColor: '#327BF6',
-                      justifyContent: 'center',
-                      paddingLeft: 10,
-                      borderRadius: 5,
-                      elevation: 2,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: '#ffffff',
-                        fontWeight: 'bold',
-                      }}>
-                      {item.nama_kantor}
-                    </Text>
-                    <Text style={{fontSize: 12, color: '#ffffff'}}>
-                      {item.telp}
-                    </Text>
-                  </View>
-                )}
-              />
-            </View>
-          </View>
-        </Modal>
-      </Content>
+      </View>
       <FabHome navigation={navigation} />
     </Container>
   );
