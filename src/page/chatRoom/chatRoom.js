@@ -12,8 +12,6 @@ import {
   Row,
   Col,
   View,
-  Input,
-  Toast,
 } from 'native-base';
 import moment from 'moment';
 import {FlatList} from 'react-native-gesture-handler';
@@ -52,7 +50,6 @@ const chatRoom = ({navigation}) => {
     await messagedata.on('value', data => {
       let result = [];
       data.forEach(item => {
-        // console.log('dataPolsek' + dataPolsek);
         console.log(item.val().penerima);
         item.val().penerima == dataPolsek.PolsekID ||
         item.val().pengirim == dataPolsek.PolsekID

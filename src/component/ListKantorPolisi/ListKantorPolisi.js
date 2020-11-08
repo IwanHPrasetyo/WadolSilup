@@ -76,14 +76,14 @@ const ListKantorPolisi = ({item, Styles, index, navigation}) => {
           </Col>
           <Col>
             <Button
-              onPress={() =>
-                navigation.navigate('MapScreen', {
-                  nama_kantor: item.nama_kantor,
-                  alamat: item.alamat,
-                  latitude: item.latitude,
-                  longitude: item.longitude,
-                })
-              }
+              // onPress={() =>
+              //   navigation.navigate('MapScreen', {
+              //     nama_kantor: item.nama_kantor,
+              //     alamat: item.alamat,
+              //     latitude: item.latitude,
+              //     longitude: item.longitude,
+              //   })
+              // }
               style={Styles.button}>
               <Icon name="map-pin" type="Feather" />
             </Button>
