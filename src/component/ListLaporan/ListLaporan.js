@@ -46,7 +46,7 @@ const ListLaporan = ({item, Styles, index}) => {
                         marginLeft: SCREEN_WIDTH * 0.01,
                       }}>
                       <Text numberOfLines={1} style={Styles.textItem}>
-                        {item.nama_kasus}
+                        {item.namaLaporan}
                       </Text>
                     </Col>
                   </Row>
@@ -62,8 +62,8 @@ const ListLaporan = ({item, Styles, index}) => {
                         alignItems: 'center',
                       }}>
                       <Icon
-                        name="location-pin"
-                        type="Entypo"
+                        name="chain"
+                        type="FontAwesome"
                         style={{
                           fontSize: SCREEN_WIDTH * 0.05,
                           color: '#f1c40f',
@@ -77,7 +77,7 @@ const ListLaporan = ({item, Styles, index}) => {
                         marginLeft: SCREEN_WIDTH * 0.01,
                       }}>
                       <Text numberOfLines={1} style={[Styles.textItem2]}>
-                        {item.alamat}
+                        {item.jenisKriminal}
                       </Text>
                     </Col>
                   </Row>
@@ -93,11 +93,11 @@ const ListLaporan = ({item, Styles, index}) => {
                         alignItems: 'center',
                       }}>
                       <Icon
-                        name="location-pin"
-                        type="Entypo"
+                        name="legal"
+                        type="FontAwesome"
                         style={{
                           fontSize: SCREEN_WIDTH * 0.05,
-                          color: '#f1c40f',
+                          color: '#e74c3c',
                         }}
                       />
                     </Col>

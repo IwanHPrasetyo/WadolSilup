@@ -17,6 +17,9 @@ import {Dimensions, StatusBar, SafeAreaView, StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import ListLaporan from '../../component/ListLaporan/ListLaporan';
 
+import {firebase} from '../../helper/FirebaseSync';
+import {getDataLogin} from '../../helper/Asyncstorage';
+
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -66,6 +69,27 @@ const dataKantorPolisi = [
 ];
 
 const masterlaporan = ({navigation}) => {
+  const [dataLaporan, setDataLaporan] = useState([]);
+
+  useEffect(() => {
+    getLaporan();
+  }, []);
+
+  const getLaporan = async () => {
+    let conn = firebase.database();
+    let laporan = conn.ref(`DataLaporan/`);
+    let data = await getDataLogin();
+    let id = data[0].noIdentitas;
+
+    laporan.on('value', data => {
+      let pesan = [];
+      data.forEach(item => {
+        item.val().nomerId == id ? pesan.push(item.val()) : null;
+      });
+      setDataLaporan(pesan.reverse());
+    });
+  };
+
   return (
     <Container>
       <Header style={{backgroundColor: '#327BF6'}}>
@@ -116,7 +140,7 @@ const masterlaporan = ({navigation}) => {
       </Header>
       <View style={Styles.container}>
         <FlatList
-          data={dataKantorPolisi}
+          data={dataLaporan}
           renderItem={({item, index}) => (
             <ListLaporan item={item} Styles={Styles} index={index} />
           )}

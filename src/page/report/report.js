@@ -69,20 +69,10 @@ report = ({navigation}) => {
       .then(snapshot => {
         data = snapshot.val();
       });
-    console.log(data.length);
     simpanLaporan(data.length);
   };
 
   const simpanLaporan = no => {
-    console.log(selected2);
-    console.log(moment().format('l'));
-    console.log('simpan laporan');
-    console.log(dataLatitude);
-    console.log(dataLongtitude);
-    console.log(dataUser[0].telfon);
-    console.log(no);
-    console.log(namaLaporan);
-    console.log(kronologi);
     database()
       .ref(`/DataLaporan/${no}`)
       .set({
@@ -100,12 +90,11 @@ report = ({navigation}) => {
         Longtitude: dataLongtitude,
       })
       .then(() => {
-        console.log('Data set.');
-        Toast.show({
-          text: 'Berhasil Membuat Laporan',
-          type: 'success',
-          duration: 800,
-        });
+        // Toast.show({
+        //   text: 'Berhasil Membuat Laporan',
+        //   type: 'success',
+        //   duration: 800,
+        // });
         setTimeout(() => {
           navigation.goBack(null);
         }, 1000);

@@ -68,27 +68,29 @@ const chat = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#327BF6'}}>
-      {kantorPenerima.length <= 0 ? (
-        <Spinner style={{alignSelf: 'center'}} />
-      ) : (
-        <FlatList
-          data={kantorPenerima}
-          initialNumToRender={7}
-          style={{marginTop: 16, marginBottom: 16, zIndex: 1}}
-          renderItem={({item, index}) => (
-            <ListChat
-              item={item}
-              navigation={navigation}
-              index={index}
-              getDataPolsek={getDataPolsek}
-            />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      )}
+    <Container>
+      <View style={{flex: 1, backgroundColor: '#327BF6'}}>
+        {kantorPenerima.length <= 0 ? (
+          <Spinner style={{alignSelf: 'center'}} />
+        ) : (
+          <FlatList
+            data={kantorPenerima}
+            initialNumToRender={7}
+            style={{marginTop: 16, marginBottom: 16, zIndex: 1}}
+            renderItem={({item, index}) => (
+              <ListChat
+                item={item}
+                navigation={navigation}
+                index={index}
+                getDataPolsek={getDataPolsek}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
+      </View>
       <FabHome navigation={navigation} />
-    </View>
+    </Container>
   );
 };
 
