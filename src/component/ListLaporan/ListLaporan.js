@@ -93,11 +93,12 @@ const ListLaporan = ({item, Styles, index}) => {
                         alignItems: 'center',
                       }}>
                       <Icon
-                        name="legal"
+                        name={item.status == 'Proses' ? 'legal' : 'star'}
                         type="FontAwesome"
                         style={{
                           fontSize: SCREEN_WIDTH * 0.05,
-                          color: '#e74c3c',
+                          color:
+                            item.status == 'Proses' ? '#e74c3c' : '#44bd32',
                         }}
                       />
                     </Col>
