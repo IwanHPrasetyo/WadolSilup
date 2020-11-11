@@ -47,8 +47,6 @@ const chatRoom = ({navigation}) => {
 
     let dataPolsek = navigation.getParam('data');
 
-    console.log(dataPolsek);
-
     await messagedata.on('value', data => {
       let result = [];
       data.forEach(item => {
@@ -57,6 +55,7 @@ const chatRoom = ({navigation}) => {
           ? result.push(item.val())
           : null;
       });
+      console.log(result);
       setDataPesan(result);
     });
   };

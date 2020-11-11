@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
-import {View, Container} from 'native-base';
+import {View, Container, Spinner} from 'native-base';
 import FabHome from '../../component/fabToHome';
 import {firebase} from '../../helper/FirebaseSync';
 import {FlatList} from 'react-native-gesture-handler';
@@ -13,6 +13,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const chat = ({navigation}) => {
   const [active, setActive] = useState(false);
   const [kantorPenerima, setKantorPenerima] = useState([]);
+  const [idUser, setIdUser] = useState();
 
   useEffect(() => {
     getPesan();
@@ -22,6 +23,7 @@ const chat = ({navigation}) => {
     let data = await getDataLogin();
     let conn = firebase.database();
     let message = conn.ref(`Message/${data[0].noIdentitas}/`);
+    setIdUser(data[0].noIdentitas);
 
     message.on('value', dataPesan => {
       let idUser = [];
@@ -32,11 +34,19 @@ const chat = ({navigation}) => {
         item.val().pegirim != data[0].noIdentitas
           ? (idUser.push(parseInt(item.val().pegirim)),
             pesan.push(item.val()),
-            dataPenerima.push(item.val().namaPolsek))
+            dataPenerima.push({
+              namaPolsek: item.val().namaPolsek,
+              pengirim: item.val().pegirim,
+              penerima: item.val().penerima,
+            }))
           : item.val().penerima != data[0].noIdentitas
           ? (idUser.push(parseInt(item.val().penerima)),
             pesan.push(item.val()),
-            dataPenerima.push(item.val().namaPolsek))
+            dataPenerima.push({
+              namaPolsek: item.val().namaPolsek,
+              pengirim: item.val().pegirim,
+              penerima: item.val().penerima,
+            }))
           : null;
       });
       const unique = [...new Set(idUser)];
@@ -45,21 +55,40 @@ const chat = ({navigation}) => {
     });
   };
 
+  const getDataPolsek = item => {
+    let idPenerima = item.pengirim != idUser ? item.pengirim : item.penerima;
+    let db = firebase.database();
+    let msg = db.ref(`DataPolsek/${idPenerima}/`);
+
+    msg.on('value', data => {
+      let dataPolsek = null;
+      dataPolsek = data.val();
+      navigation.navigate('ChatRoomScreen', {data: dataPolsek});
+    });
+  };
+
   return (
-    <Container>
-      <View style={{flex: 1, backgroundColor: '#327BF6'}}>
+    <View style={{flex: 1, backgroundColor: '#327BF6'}}>
+      {kantorPenerima.length <= 0 ? (
+        <Spinner style={{alignSelf: 'center'}} />
+      ) : (
         <FlatList
           data={kantorPenerima}
           initialNumToRender={7}
           style={{marginTop: 16, marginBottom: 16, zIndex: 1}}
           renderItem={({item, index}) => (
-            <ListChat item={item} navigation={navigation} index={index} />
+            <ListChat
+              item={item}
+              navigation={navigation}
+              index={index}
+              getDataPolsek={getDataPolsek}
+            />
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-      </View>
+      )}
       <FabHome navigation={navigation} />
-    </Container>
+    </View>
   );
 };
 

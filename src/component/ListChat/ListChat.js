@@ -4,9 +4,9 @@ import {TouchableOpacity, Dimensions} from 'react-native';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-const ListChat = ({item, index, navigation}) => {
+const ListChat = ({item, index, navigation, getDataPolsek}) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ChatRoomScreen')}>
+    <TouchableOpacity onPress={() => getDataPolsek(item)}>
       <Grid
         style={{
           backgroundColor: '#ffffff',
@@ -24,7 +24,9 @@ const ListChat = ({item, index, navigation}) => {
             }}>
             <Thumbnail
               source={{
-                uri: `https://ui-avatars.com/api/?size=256&name=${item}`,
+                uri: `https://ui-avatars.com/api/?size=256&name=${
+                  item.namaPolsek
+                }`,
               }}
             />
             {/* {item.pesanMasuk != 0 ? (
@@ -54,7 +56,7 @@ const ListChat = ({item, index, navigation}) => {
             <Text
               numberOfLines={1}
               style={{fontWeight: 'bold', color: '#273c75'}}>
-              {item}
+              {item.namaPolsek}
             </Text>
             {/* <Text numberOfLines={1} style={{color: '#afafaf'}}>
               {item.pesan}
