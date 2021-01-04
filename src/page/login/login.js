@@ -47,6 +47,7 @@ const login = ({navigation}) => {
   const Login = async () => {
     const data = [];
 
+
     let conn = firebase.database();
     let fireDataLaporan = conn.ref(`/DataPolapor/${id}`).once('value');
 

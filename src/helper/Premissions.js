@@ -22,6 +22,10 @@ export const Location = async () => {
         longitude = info.coords.longitude;
         data.push(latitude, longitude);
         console.log('datanyaa looo2');
+
+        console.log(info.coords.latitude);
+        console.log(info.coords.longitude);
+
         inLocation(data);
         return data;
       });
@@ -29,8 +33,5 @@ export const Location = async () => {
     .catch(error => {
       console.log(error.message);
     });
-
-  console.log('datanyaa looo');
-  console.log(data);
   return data;
 };

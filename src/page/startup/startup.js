@@ -16,7 +16,7 @@ import Styles from '../../style/style';
 import database from '@react-native-firebase/database';
 import {getDataLogin} from '../../helper/Asyncstorage';
 import {ActivityIndicator} from 'react-native';
-// import {Location} from '../../helper/Premissions';
+import {Location} from '../../helper/Premissions';
 
 const startup = ({navigation}) => {
   const [onLogin, setOnlogin] = useState(false);
@@ -26,6 +26,7 @@ const startup = ({navigation}) => {
   useEffect(() => {
     dataLogin();
     // dataKTP();
+    Location();
     return () => {
       setOnlogin(false);
     };
