@@ -1,58 +1,37 @@
 import React, {useState, useEffect} from 'react';
 import {Container, Header, Text, Body, Left, Icon, View} from 'native-base';
-import {Dimensions, StatusBar, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  StatusBar,
+  StyleSheet,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import {firebase} from '../../helper/FirebaseSync';
 import ListKantorPolisi from '../../component/ListKantorPolisi/ListKantorPolisi';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const dataKantorPolisi = [
-  {
-    nama_kantor: 'Polresta Malang',
-    alamat: 'Jl. Slamet Riyadi Malang',
-    telp: '(0341) 366444',
-    latitude: -7.9716824,
-    longitude: 112.6305915,
-  },
-  {
-    nama_kantor: 'Polsekta Blimbing',
-    alamat: 'Jl. Raden Intan No.6 Malang',
-    telp: '(0341) 491304',
-    latitude: -7.9299114,
-    longitude: 112.6483513,
-  },
-  {
-    nama_kantor: 'Polsekta Kedungkandang',
-    alamat: 'Jl. Ki Ageng Gribig 96 Malang',
-    telp: '(0341) 325057',
-    latitude: -7.9934269,
-    longitude: 112.6460037,
-  },
-  {
-    nama_kantor: 'Polsekta Klojen',
-    alamat: 'Jl. Kelut 11 Malang',
-    telp: '(0341) 361667',
-    latitude: -7.9808747,
-    longitude: 112.6233234,
-  },
-  {
-    nama_kantor: 'Polsekta Lowokwaru',
-    alamat: 'Jl. Lowokwaru-Malang',
-    telp: '(0341) 472392',
-    latitude: -7.9413999,
-    longitude: 112.6071599,
-  },
-  {
-    nama_kantor: 'Polsekta Sukun',
-    alamat: 'Jl. Kol Sugiono No.5 Malang',
-    telp: '(0341) 368638',
-    latitude: -8.0042733,
-    longitude: 112.6163261,
-  },
-];
-
 const kantorpolisi = ({navigation}) => {
+  const [dataKantorPolisi, setDataKantorPolisi] = useState([]);
+  useEffect(() => {
+    getPolsek();
+  });
+
+  const getPolsek = async () => {
+    let conn = firebase.database();
+    conn
+      .ref(`/DataPolsek/`)
+      .once('value')
+      .then(item => {
+        const data = item.val().filter(item => {
+          return item != null;
+        });
+        setDataKantorPolisi(data);
+      });
+  };
+
   return (
     <Container>
       <Header style={{backgroundColor: '#327BF6'}}>
@@ -82,18 +61,31 @@ const kantorpolisi = ({navigation}) => {
           }}>
           Daftar Kantor Polisi Kota Malang
         </Text>
-        <FlatList
-          data={dataKantorPolisi}
-          renderItem={({item, index}) => (
-            <ListKantorPolisi
-              item={item}
-              Styles={Styles}
-              index={index}
-              navigation={navigation}
+
+        {dataKantorPolisi.length <= 0 ? (
+          <>
+            <ActivityIndicator
+              style={{marginTop: '50%'}}
+              size="small"
+              color="#ffffff"
             />
-          )}
-          keyExtractor={item => item.nama_kantor}
-        />
+          </>
+        ) : (
+          <>
+            <FlatList
+              data={dataKantorPolisi}
+              renderItem={({item, index}) => (
+                <ListKantorPolisi
+                  item={item}
+                  Styles={Styles}
+                  index={index}
+                  navigation={navigation}
+                />
+              )}
+              keyExtractor={item => item.NamaKantor}
+            />
+          </>
+        )}
       </View>
     </Container>
   );

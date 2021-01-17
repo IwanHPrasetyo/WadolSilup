@@ -17,7 +17,7 @@ import {
   Left,
   Toast,
 } from 'native-base';
-import {Dimensions, Image, StatusBar} from 'react-native';
+import {Dimensions, Image, StatusBar, ToastAndroid} from 'react-native';
 // import database from '@react-native-firebase/database';
 import {firebase} from '../../helper/FirebaseSync';
 import {loginData, getDataLogin} from '../../helper/Asyncstorage';
@@ -47,7 +47,6 @@ const login = ({navigation}) => {
   const Login = async () => {
     const data = [];
 
-
     let conn = firebase.database();
     let fireDataLaporan = conn.ref(`/DataPolapor/${id}`).once('value');
 
@@ -60,22 +59,15 @@ const login = ({navigation}) => {
 
     uid
       ? passauth
-        ? (Toast.show({
-            text: 'Login Berhasil',
-            type: 'success',
-            duration: 800,
-          }),
+        ? (ToastAndroid.show('Login Berhasil', ToastAndroid.SHORT),
           (await loginData(data))
             ? navigation.navigate('DashboardScreen')
             : null)
-        : Toast.show({
-            text: 'Password yang anda masukan salah!',
-            type: 'warning',
-          })
-      : Toast.show({
-          text: 'Id tidak terdaftar',
-          type: 'warning',
-        });
+        : ToastAndroid.show(
+            'Password yang anda masukan salah!',
+            ToastAndroid.SHORT,
+          )
+      : ToastAndroid.show('Id tidak terdaftar', ToastAndroid.SHORT);
   };
 
   return (

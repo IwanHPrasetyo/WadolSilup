@@ -36,7 +36,7 @@ const ListKantorPolisi = ({item, Styles, index, navigation}) => {
                       marginLeft: SCREEN_WIDTH * 0.01,
                     }}>
                     <Text numberOfLines={1} style={Styles.textItem}>
-                      {item.nama_kantor}
+                      {item.NamaKantor}
                     </Text>
                   </Col>
                 </Row>
@@ -67,7 +67,7 @@ const ListKantorPolisi = ({item, Styles, index, navigation}) => {
                       marginLeft: SCREEN_WIDTH * 0.01,
                     }}>
                     <Text numberOfLines={1} style={Styles.textItem2}>
-                      {item.alamat}
+                      {item.Alamat}
                     </Text>
                   </Col>
                 </Row>

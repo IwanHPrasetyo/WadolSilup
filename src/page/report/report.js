@@ -19,22 +19,25 @@ import {
   Grid,
   Toast,
 } from 'native-base';
-import {StatusBar, Dimensions} from 'react-native';
+import {StatusBar, Dimensions, ToastAndroid} from 'react-native';
 import {getDataLogin, getInLocation} from '../../helper/Asyncstorage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
+import {firebase} from '../../helper/FirebaseSync';
 import moment from 'moment';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-report = ({navigation}) => {
+const report = ({navigation}) => {
   const [selected2, setSelected2] = useState(undefined);
+  const [selected3, setSelected3] = useState(undefined);
   const [dataUser, setDataUser] = useState();
   const [dataLatitude, setDataLatitude] = useState();
   const [dataLongtitude, setDataLongtitude] = useState();
   const [kronologi, setKronologi] = useState();
   const [namaLaporan, setNamaLaporan] = useState();
+  const [dataPolsek, setDataPolsek] = useState([]);
   const [kriminal, setKriminal] = useState([
     {id: 1, jenisKriminal: 'Pencurian Kendaraan Bermotor'},
     {id: 2, jenisKriminal: 'Pencurian dengan Kekerasan'},
@@ -44,8 +47,13 @@ report = ({navigation}) => {
   const onValueChange = value => {
     setSelected2(value);
   };
+  const onValueChange2 = value => {
+    setSelected3(value);
+  };
   useEffect(() => {
     dataLogin();
+    getPolsek();
+    console.log(selected3);
   }, []);
 
   const dataLogin = async () => {
@@ -59,6 +67,19 @@ report = ({navigation}) => {
     console.log('get data locatioon');
     console.log(location.length);
     console.log(location.lo);
+  };
+
+  const getPolsek = async () => {
+    const conn = firebase.database();
+    conn
+      .ref(`/DataPolsek/`)
+      .once('value')
+      .then(item => {
+        const data = item.val().filter(item => {
+          return item != null;
+        });
+        setDataPolsek(data);
+      });
   };
 
   const dataLaporan = async () => {
@@ -84,17 +105,13 @@ report = ({navigation}) => {
         nomerId: dataUser[0].noIdentitas,
         status: 'Proses',
         tanggal: moment().format('l'),
-        namaPolse: 'Polsekta Blimbing',
+        namaPolse: selected3,
         telfon: dataUser[0].telfon,
         latitude: dataLatitude,
         Longtitude: dataLongtitude,
       })
       .then(() => {
-        // Toast.show({
-        //   text: 'Berhasil Membuat Laporan',
-        //   type: 'success',
-        //   duration: 800,
-        // });
+        ToastAndroid.show('Laporan Berhasil', ToastAndroid.SHORT);
         setTimeout(() => {
           navigation.goBack(null);
         }, 1000);
@@ -177,11 +194,11 @@ report = ({navigation}) => {
             backgroundColor: '#ffffff',
           }}>
           <Text style={{fontWeight: 'bold', color: '#273c75'}}>
-            Nomer Laporan
+            Form Laporan
           </Text>
-          <Text style={{fontWeight: 'bold', color: '#273c75'}}>
+          {/* <Text style={{fontWeight: 'bold', color: '#273c75'}}>
             MLG/01/V/20/CR02
-          </Text>
+          </Text> */}
           <Item picker style={{marginTop: '5%'}}>
             <Picker
               mode="dropdown"
@@ -224,7 +241,7 @@ report = ({navigation}) => {
               }}
             />
           </Item>
-          <Icon
+          {/* <Icon
             name="location"
             type="Entypo"
             style={{
@@ -232,15 +249,28 @@ report = ({navigation}) => {
               color: '#4cd137',
               fontSize: SCREEN_WIDTH * 0.05,
             }}
-          />
-          <Text
-            style={{
-              fontWeight: 'bold',
-              justifyContent: 'center',
-              color: '#273c75',
-            }}>
-            Polsekta Blimbing
-          </Text>
+          /> */}
+          <Item picker style={{marginTop: '5%'}}>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+              style={{width: undefined}}
+              placeholder="Select your SIM"
+              placeholderStyle={{color: '#bfc6ea'}}
+              placeholderIconColor="#007aff"
+              selectedValue={selected3}
+              onValueChange={data => {
+                onValueChange2(data);
+              }}>
+              {dataPolsek.map(item => (
+                <Picker.Item
+                  key={item.NamaKantor}
+                  label={item.NamaKantor}
+                  value={item.NamaKantor}
+                />
+              ))}
+            </Picker>
+          </Item>
           <TouchableOpacity onPress={() => dataLaporan()}>
             <Button
               rounded

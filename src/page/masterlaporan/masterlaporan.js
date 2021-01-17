@@ -13,7 +13,13 @@ import {
   Grid,
   Button,
 } from 'native-base';
-import {Dimensions, StatusBar, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  Dimensions,
+  StatusBar,
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import ListLaporan from '../../component/ListLaporan/ListLaporan';
 
@@ -139,13 +145,25 @@ const masterlaporan = ({navigation}) => {
         </Body>
       </Header>
       <View style={Styles.container}>
-        <FlatList
-          data={dataLaporan}
-          renderItem={({item, index}) => (
-            <ListLaporan item={item} Styles={Styles} index={index} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {dataLaporan <= 0 ? (
+          <>
+            <ActivityIndicator
+              style={{marginTop: '50%'}}
+              size="small"
+              color="#ffffff"
+            />
+          </>
+        ) : (
+          <>
+            <FlatList
+              data={dataLaporan}
+              renderItem={({item, index}) => (
+                <ListLaporan item={item} Styles={Styles} index={index} />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </>
+        )}
       </View>
     </Container>
   );
