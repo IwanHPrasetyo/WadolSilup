@@ -5,7 +5,7 @@ import {Dimensions} from 'react-native';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const ListLaporan = ({item, Styles, index}) => {
+const ListLaporan = ({item, Styles, index, setModalVisible, setDataModal}) => {
   return (
     <>
       <Text
@@ -117,7 +117,12 @@ const ListLaporan = ({item, Styles, index}) => {
               </Row>
             </Col>
             <Col style={{justifyContent: 'center'}}>
-              <Button style={Styles.button}>
+              <Button
+                style={Styles.button}
+                onPress={async () => {
+                  await setDataModal(item);
+                  setModalVisible(true);
+                }}>
                 <Icon name="clipboard-list" type="FontAwesome5" />
               </Button>
             </Col>

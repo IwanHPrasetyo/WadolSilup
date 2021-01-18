@@ -6,6 +6,7 @@ import {firebase} from '../../helper/FirebaseSync';
 import {FlatList} from 'react-native-gesture-handler';
 import ListChat from '../../component/ListChat/ListChat';
 import {getDataLogin} from '../../helper/Asyncstorage';
+import {log} from 'react-native-reanimated';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -31,6 +32,9 @@ const chat = ({navigation}) => {
       let pesan = [];
       let dataPenerima = [];
       dataPesan.forEach(item => {
+        // console.log(item.val());
+        // console.log(data);
+
         item.val().pegirim != data[0].noIdentitas
           ? (idUser.push(parseInt(item.val().pegirim)),
             pesan.push(item.val()),
@@ -49,10 +53,33 @@ const chat = ({navigation}) => {
             }))
           : null;
       });
-      const unique = [...new Set(idUser)];
+      // const unique = [...new Set(idUser)];
       const namaUnique = [...new Set(dataPenerima)];
-      setKantorPenerima(namaUnique);
+      // console.log(unique);
+      nameInbox(idUser);
+      // setKantorPenerima(namaUnique);
     });
+  };
+
+  const nameInbox = async idUser => {
+    const namaPolsek = [];
+
+    const unique = [...new Set(idUser)];
+
+    let conn = firebase.database();
+
+    await unique.forEach(item => {
+      let policeInbox = conn.ref(`DataPolsek/${item}/`);
+      policeInbox.on('value', dataPolice => {
+        console.log(dataPolice);
+        namaPolsek.push({
+          namaPolsek: dataPolice.val().NamaKantor,
+          pengirim: dataPolice.val().PolsekID,
+          penerima: idUser,
+        });
+      });
+    });
+    setKantorPenerima(namaPolsek);
   };
 
   const getDataPolsek = item => {

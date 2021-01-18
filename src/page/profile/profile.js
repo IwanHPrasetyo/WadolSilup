@@ -15,7 +15,7 @@ import {
   Thumbnail,
   Button,
 } from 'native-base';
-import {StatusBar, StyleSheet, Dimensions} from 'react-native';
+import {StatusBar, StyleSheet, Dimensions, Modal} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {getDataLogin} from '../../helper/Asyncstorage';
@@ -137,7 +137,7 @@ const profile = ({navigation}) => {
               color: '#273c75',
               fontSize: SCREEN_HEIGHT * 0.035,
             }}>
-            {dataUser.length != 0 ? dataUser[0].email : 'email'}
+            {dataUser.length != 0 ? dataUser[0].noIdentitas : 'email'}
           </Text>
           <Text
             style={{

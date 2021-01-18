@@ -53,7 +53,6 @@ const report = ({navigation}) => {
   useEffect(() => {
     dataLogin();
     getPolsek();
-    console.log(selected3);
   }, []);
 
   const dataLogin = async () => {
@@ -64,9 +63,9 @@ const report = ({navigation}) => {
     location.la != undefined
       ? (setDataLatitude(location.la), setDataLongtitude(location.lo))
       : null;
-    console.log('get data locatioon');
-    console.log(location.length);
-    console.log(location.lo);
+    // console.log('get data locatioon');
+    // console.log(location.length);
+    // console.log(location.lo);
   };
 
   const getPolsek = async () => {
